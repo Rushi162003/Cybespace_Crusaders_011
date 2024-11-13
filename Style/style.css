@@ -1,0 +1,64 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ece1e1;
+    min-height: 60px;
+    justify-content: space-between;
+}
+header .left,
+header .right{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.logo-item{
+    width: 20%;
+    height: 30%;
+}
+.nav ul{
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin-right: 10;
+}
+.nav ul li{
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.nav ul li:hover{
+    color: #ee356c;
+}
+.inputSearch{
+    background:#f5f5f9;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+}
+.inputSearch input{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 5px;
+    min-width: 300px;
+    width: 100px;
+    max-width: 700px;
+}
+.accountLink{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 500;
+}
