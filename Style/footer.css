@@ -1,0 +1,141 @@
+        body{
+            font-family: Cera, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.42857;
+            color: rgb(51, 51, 51);
+            background-color: rgb(255, 255, 255);
+       }
+        #imgheading{
+            margin-left:7%;
+            font-size: 24px;
+            margin-bottom: 1%;
+            font-family: Helvetica;
+            margin-top:3.8%;
+        }
+        #blackportion{
+            width:"100%";
+            background-color: #333;
+            color: whitesmoke;
+            font-family: inherit;
+        }
+        #black1 > div{
+            display: inline-block;
+            width:30%;
+            margin-bottom: 4%;
+        }
+        #black1{
+            display: inline-block;
+            margin-left:7%;
+           
+        }
+        #black2,#black3{
+            display: inline-block;   
+        }
+        #black2{
+            vertical-align: top;
+        }
+        #black3{
+            vertical-align: top;
+            margin-left:9.5%;
+        }
+        #black3 >p{
+            font-size:12px;
+        }
+       #search-container button {
+        float: right;
+        color:gray;
+        padding:8px;
+        background-color: #333;
+        font-size: 15px;
+        border: 1px solid gray;
+        cursor: pointer;
+        }
+
+        #search-container input{
+       background-color: #333;
+       color:gray;
+       border: 1px solid gray;
+       padding:8.9px;
+    }
+    #grayportion{
+        background-color: #f3f2f2;
+        padding: 30px 0 39px 0;
+    }
+    #insidegray{
+        display: grid;
+        grid-template-columns: 10% 15% 19% 8% 12%;
+        grid-gap: 6.5%;
+        margin-left:7%;
+        font-family: Cera,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+    .inside1 > div{
+        padding-bottom: 4.5%;
+        cursor: pointer;
+    }
+    .title{
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+    #empty{
+        height:35px;
+    }
+    #logo > img{
+        margin-right: 2%;
+    }
+    #aftergray{
+        padding: 26px 0 36px 0;
+    }
+
+    #lastbox{
+        height: 38px;
+        background: #FD7685;
+        text-align: center;
+        color: #FFFFFF;
+        padding-top: 1rem;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 15px;
+    }
+        #inputnumber{
+            display:grid;
+            grid-template-columns: 7% 40%;
+            margin-left: 6%;
+            margin-top:3%;
+            
+        }
+        #inputnumber > div{
+            background-color: #E0E0E0;
+            color: rgb(92, 104, 116);
+            padding-top:26%;
+            letter-spacing: 0.25px;
+            text-align: right;
+            border-bottom: 1px solid black;
+        }
+        #inputnumber > input {
+            outline: none;
+            border: none;
+            background-color: #E0E0E0;
+            color: rgb(92, 104, 116);
+            padding:5%;
+            letter-spacing: 0.25px;
+            border-bottom: 1px solid black;
+        }
+        #enter{
+            font: 400 1.1429rem / 1.5 Cera, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            letter-spacing: 0.25px;
+            color: rgb(20, 37, 54);
+            margin-left: 6%;
+            margin-top:2%;
+        }
+        #submitnumber{
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 5%;
+            margin-left: 6%;
+            padding:2%;
+            width:44%;
+            margin-bottom: 5%;
+        }
