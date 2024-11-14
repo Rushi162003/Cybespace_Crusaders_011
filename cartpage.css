@@ -1,0 +1,252 @@
+/* General resets */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+.header-content h1 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.header-content p {
+    margin: 5px 0 ;
+    font-size: 1.1rem;
+}
+
+.header-buttons .btn {
+    background: #fff;
+    color: #ff758c;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.header-buttons .btn:hover {
+    background: #ff7eb3;
+    color: #fff;
+}
+
+/* Navigation bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .logo a {
+    font-size: 1.8rem;
+    color: #ff758c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar .nav-links ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar .nav-links ul li a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar .nav-links ul li a:hover {
+    color: #ff758c;
+}
+
+.navbar .cart-icon {
+    position: relative;
+    font-size: 1.5rem;
+}
+
+.navbar .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff758c;
+    color: #fff;
+    border-radius: 50%;
+    padding: 3px 8px;
+    font-size: 0.8rem;
+}
+
+/* Cart page content */
+.cart-page {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.cart-page h1 {
+    text-align: center;
+    color: #ff758c;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.cart-items {
+    margin: 20px 0;
+}
+
+/* Checkout form */
+#checkout-form {
+    margin-top: 30px;
+    /* box-sizing: border-box; */
+}
+
+#checkout-form h2 {
+    color: #ff758c;
+    font-size: 1.5rem;
+}
+
+#checkout-form .form-group {
+    margin-bottom: 15px;
+}
+
+#checkout-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#checkout-form input, #checkout-form textarea {
+    width: 98%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.payment-buttons{
+    display: flex;
+    gap: 10px;
+}
+#checkout-form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #ff758c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+#checkout-form button:hover {
+    background: #ff7eb3;
+}
+
+.total-price {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    text-align: right;
+    font-weight: bold;
+}
+
+/* Payment options */
+.payment-options {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.payment-options h3 {
+    color: #ff758c;
+    margin-bottom: 10px;
+}
+
+.payment-option {
+    margin-bottom: 10px;
+}
+
+.payment-option label {
+    margin-left: 5px;
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.footer a {
+    color: #ff758c;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1.2rem;
+}
+
+.footer .payment-methods img {
+    width: 500px;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .navbar .nav-links ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cart-page {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    #checkout-form button {
+        font-size: 0.9rem;
+    }
+}
+
+
+.spinner {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid #ddd;
+    border-top: 4px solid #6200ea;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
