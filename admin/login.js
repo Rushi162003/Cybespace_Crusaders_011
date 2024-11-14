@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const signupBtn = document.querySelector("label.signup");
     const signupLink = document.querySelector("form .signup-link a");
 
-    let login_details = JSON.parse(localStorage.getItem("signup_details")) || [];
+    let login_details = JSON.parse(localStorage.getItem("admin_signup_details")) || [];
 
     // Show "Sign-In" and hide "Create Account"
     loginBtn.onclick = () => {
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
 
                 login_details.push(obj);
-                localStorage.setItem("signup_details", JSON.stringify(login_details));
+                localStorage.setItem("admin_signup_details", JSON.stringify(login_details));
                 alert("Signup Successful");
                 window.location.reload(); // Refresh the page after successful signup
             } else {
@@ -72,19 +72,19 @@ document.addEventListener("DOMContentLoaded", () => {
         let login_pass = document.querySelector("#login-password").value.trim();
 
         // Use `find()` to check for matching user
-        let user = login_details.find((elem) => elem.signup_email === login_email && elem.signup_pass === login_pass);
+        let admin = login_details.find((elem) => elem.signup_email === login_email && elem.signup_pass === login_pass);
 
-        if (user) {
+        if (admin) {
             // Generate a unique user ID (using current timestamp and random number)
-            const userId = `user_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+            const adminId = `admin_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
             // Save the user ID in localStorage for future reference
-            localStorage.setItem("currentUserId", userId);
-            localStorage.setItem("currentUserEmail", user.signup_email);
-            localStorage.setItem("currUserName", user.signup_name);
+            localStorage.setItem("currentAdminId", adminId);
+            localStorage.setItem("currentAdminEmail", admin.signup_email);
+            localStorage.setItem("currAdminName", admin.signup_name);
 
             alert("Login Successful");
-            window.location.href = "./index.html"; // Redirect if login is successful
+            window.location.href = "./admin.html"; // Redirect if login is successful
         } else {
             alert("Incorrect Credentials");
         }

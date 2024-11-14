@@ -12,6 +12,19 @@
 </head>
 
 <body>
+    <nav class="navbar">
+        <div class="logo">Nayka Admin</div>
+        <div class="toggle">&#9776;</div>
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="#users">Users</a></li>
+            <li><a href="./addProduct.html">Add Product</a></li>
+            <li><a href="#settings">Settings</a></li>
+            <li>
+                <p style="cursor: pointer;" id="logout-button">Logout</p>
+            </li>
+        </ul>
+    </nav>
     <div class="main-content">
         <div class="header">
             <h1>Welcome to the Admin Dashboard</h1>
@@ -57,42 +70,6 @@
 
 </html>
 
-<script>
-    let userLength = JSON.parse(localStorage.getItem("signup_details"))
-    console.log(userLength)
-    document.querySelector(".user").innerHTML =` ${userLength.length} Active User `
-    let productArr = []
-    let proLength = 0
-    async function fetchData() {
-
-        let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/.json`)
-        let data = await res.json()
-        productArr = data
-        proLength = productArr.length
-        console.log(productArr)
-        document.querySelector("#product").innerHTML = `${proLength} Products Available`
-        console.log(proLength)
-        display(productArr)
-    }
-    fetchData()
-
-    function display(data) {
-        let child = ""
-        data.forEach(element => {
-            child += `
-             <tr>
-                <td>${element.name}</td>
-                <td>${element.brand}</td>
-                <td>${element.category}</td>
-                <td>${element.price}</td>
-                <td>${element.ratings}</td>
-                <td><button class="edit-btn" onclick = "edit${element.id}">Edit  </button></td>
-                <td><button class="delete-btn" onclick = "delete${element.id}">Delete</button></td>
-            </tr>
-            `
-
-        });
-        document.querySelector("tbody").innerHTML = child
-    }
+<script src="admin.js">
 
 </script>

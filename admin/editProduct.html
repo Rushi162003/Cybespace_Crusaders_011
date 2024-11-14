@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./admin.css">
-    <title>Admin Dashboard</title>
+    <title>Admin Dashboard-Edit Product</title>
 </head>
 
 <body>
@@ -25,7 +25,7 @@
 
     <div class="main-content">
         <div class="header">
-            <h1>Add Products</h1>
+            <h1>Edit Products</h1>
         </div>
         <form action="" id="addProduct">
             <div class="first-col">
@@ -55,8 +55,8 @@
             </div>
             <div class="sec-col">
                 <div class="input-box">
-                    <label for="stockStauts">Stock Status</label>
-                    <select id="stockStauts">
+                    <label for="stockStatus">Stock Status</label>
+                    <select id="stockStatus">
                         <option value="true">In Stock</option>
                         <option value="false">Out of Stock</option>
                     </select>
@@ -82,56 +82,86 @@
 </html>
 
 <script>
-    async function fetchCategory() {
+    let name = document.querySelector("#name")
+    let brand = document.querySelector("#brand")
+    let category = document.querySelector("#category")
+    let price = document.querySelector("#price")
+    let currency = document.querySelector("#currency")
+    let stockStatus = document.querySelector("#stockStatus")
+    let rating = document.querySelector("#rating")
+    let reviewsCount = document.querySelector("#reviewsCount")
+    let imageUrl = document.querySelector("#imageUrl")
+    let param = new URLSearchParams(window.location.search)
+    let id = param.get("id")
+    console.log(id)
+
+
+    async function fetchData() {
         try {
-            let res = await fetch("https://nayka-4ffd7-default-rtdb.firebaseio.com/.json");
-            let resp = await res.json();
-            console.log(resp);
+            // Ensure 'id' is defined somewhere in your code
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`);
+            let data = await res.json();
 
-            let categoryElement = document.querySelector("#category");
+            // Check if data exists and is an object before accessing properties
+            if (data) {
+                name.value = data.name || '';
+                brand.value = data.brand || '';
+                category.value = data.category || '';
+                price.value = data.price || '';
+                currency.value = data.currency || '';
+                stockStatus.value = data.stockStatus || '';
+                rating.value = data.ratings || '';
+                reviewsCount.value = data.reviewsCount || '';
+                imageUrl.value = data.imageUrl || '';
+                console.log(data);
 
-            // Clear any existing options (optional)
-            categoryElement.innerHTML = "";
-            let uniqueCategories = new Set();
+                let categoryElement = document.querySelector("#category");
+                categoryElement.innerHTML = ""; // Optional: clear existing options
 
-            // Check if resp is an array
-            if (Array.isArray(resp)) {
-                resp.forEach(element => {
-                    if (element.category && !uniqueCategories.has(element.category)) {
-                        uniqueCategories.add(element.category);
-                        let option = document.createElement("option");
-                        option.value = element.category;
-                        option.textContent = element.category;
-                        categoryElement.appendChild(option);
-                    }
-                });
+                let uniqueCategories = new Set();
+
+                // Check if data is an array
+                if (Array.isArray(data)) {
+                    data.forEach(element => {
+                        if (element.category && !uniqueCategories.has(element.category)) {
+                            uniqueCategories.add(element.category);
+                            let option = document.createElement("option");
+                            option.value = element.category;
+                            option.textContent = element.category;
+                            categoryElement.appendChild(option);
+                        }
+                    });
+                } else {
+                    console.error("Response is not an array:", data);
+                }
             } else {
-                console.error("Response is not an array:", resp);
+                console.error("No data received or data is null:", data);
             }
         } catch (error) {
-            console.error("Error fetching data:", error);
+            alert("Failed to fetch product data");
+            console.log(error);
         }
     }
 
-    fetchCategory();
+    fetchData();
 
     let form = document.querySelector("#addProduct")
 
 
-    form.addEventListener("click", getProduct)
+    form.addEventListener("submit", getProduct)
 
     function getProduct() {
         event.preventDefault()
+
         let name = document.querySelector("#name")
         let brand = document.querySelector("#brand")
         let category = document.querySelector("#category")
         let price = document.querySelector("#price")
         let currency = document.querySelector("#currency")
-        let stockStauts = document.querySelector("#stockStauts")
+        let stockStatus = document.querySelector("#stockStatus")
         let rating = document.querySelector("#rating")
         let reviewsCount = document.querySelector("#reviewsCount")
         let imageUrl = document.querySelector("#imageUrl")
-
 
         let proObj = {
             name: name,
@@ -139,7 +169,7 @@
             category: category,
             price: price,
             currency: currency,
-            stockStatus: stockStauts,
+            stockStatus: stockStatus,
             ratings: rating,
             reviewsCount: reviewsCount,
             imageUrl: imageUrl
@@ -151,28 +181,27 @@
         var headers = new Headers()
         headers.append("Content-Type", "application/json")
         // Ganerate Random id
-        const id = Math.floor(Math.random() * 10000) + 1
 
         let request = {
-            method: "PUT",
+            method: "PATCH",
             headers: headers,
             body: JSON.stringify(proObj),
             redirect: "follow"
         }
 
         try {
-            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`, request)
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`)
             let data = await res.json()
-            name.innerHTML = ""
-            brand.value = ""
-            category.value = ""
-            price.value = ""
-            currency.value = ""
-            stockStauts.value = ""
-            rating.value = ""
-            reviewsCount.value = ""
-            imageUrl.value = ""
-            alert("Product was added ")
+
+            name.value = data.name
+            brand.value = data.brand
+            category.value = data.category
+            price.value = data.price
+            currency.value = data.currency
+            stockStatus.value = data.stockStatus
+            rating.value = data.ratings
+            reviewsCount.value = data.reviewsCount
+            imageUrl.value = data.imageUrl
             console.log(data)
         }
         catch (error) {
