@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./admin.css">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="main-content">
+        <div class="header">
+            <h1>Add Products</h1>
+        </div>
+        <form action="" id="addProduct">
+            <div class="first-col">
+                <div class="input-box">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter product name">
+                </div>
+                <div class="input-box">
+                    <label for="brand">Brand</label>
+                    <input type="text" id="brand" placeholder="Enter product brand">
+                </div>
+                <div class="input-box">
+                    <label for="category">Category</label>
+                    <input type="text" id="category" placeholder="Enter product category">
+                </div>
+                <div class="input-box">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" placeholder="Enter price">
+                </div>
+                <div class="input-box">
+                    <label for="currency">Currency</label>
+                    <input type="text" id="currency" placeholder="Enter  currency">
+                </div>
+            </div>
+            <div class="sec-col">
+                <div class="input-box">
+                    <label for="stockStauts">Stock Stauts</label>
+                    <select name="" id="stockStauts">
+                        <option value="true">In Stock</option>
+                        <option value="false">Out of Stock</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="rating">Rating</label>
+                    <input type="text" id="rating" placeholder="Enter rating">
+                </div>
+                <div class="input-box">
+                    <label for="reviewsCount">Reviews Count</label>
+                    <input type="text" id="reviewsCount" placeholder="Enter reviewsCount">
+                </div>
+                <div class="input-box">
+                    <label for="imageUrl">Image Url</label>
+                    <input type="text" id="imageUrl" placeholder="Enter imageUrl">
+                </div>
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <nav class="main-menu">
+        <ul>
+            <li >
+                <a href="">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">
+                        Admin Dashboard
+                    </span>
+                </a>
+
+            </li>
+            <li class="has-subnav">
+                <a href="#">
+                    <i class="fa fa-globe fa-2x"></i>
+                    <span class="nav-text">
+                        Global Surveyors
+                    </span>
+                </a>
+
+            </li>
+            <li class="has-subnav" style="background-color: #F4df4eff; color: white;">
+                <a href="#" style="color: #949398ff;">
+                    <i class="fa fa-comments fa-2x"></i>
+                    <span class="nav-text">
+                        Add Products
+                    </span>
+                </a>
+
+            </li>
+            <li class="has-subnav">
+                <a href="#">
+                    <i class="fa fa-camera-retro fa-2x"></i>
+
+                    <span class="nav-text">
+                        Delete Products
+                    </span>
+                </a>
+
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-film fa-2x"></i>
+                    <span class="nav-text">
+                        Edit Products
+                    </span>
+                </a>
+            </li>
+            <!-- <li>
+                <a href="#">
+                    <i class="fa fa-book fa-2x"></i>
+                    <span class="nav-text">
+                        Surveying Jobs
+                    </span>
+                </a>
+            </li> -->
+            <li>
+                <a href="#">
+                    <i class="fa fa-cogs fa-2x"></i>
+                    <span class="nav-text">
+                        Tools & Resources
+                    </span>
+                </a>
+            </li>
+            <!-- <li>
+                <a href="#">
+                    <i class="fa fa-map-marker fa-2x"></i>
+                    <span class="nav-text">
+                        Member Map
+                    </span>
+                </a>
+            </li> -->
+            <li>
+                <a href="#">
+                    <i class="fa fa-info fa-2x"></i>
+                    <span class="nav-text">
+                        Documentation
+                    </span>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="logout">
+            <li>
+                <a href="#">
+                    <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">
+                        Logout
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</body>
+
+</html>
