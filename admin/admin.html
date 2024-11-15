@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./admin.css">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="main-content">
+        <div class="header">
+            <h1>Welcome to the Admin Dashboard</h1>
+        </div>
+        <div class="cards">
+            <div class="card">
+                <h3>Total Sales</h3>
+                <p>$12,000</p>
+            </div>
+            <div class="card">
+                <h3>Orders</h3>
+                <p>150 New Orders</p>
+            </div>
+            <div class="card">
+                <h3>Users</h3>
+                <p class="user">1,200 Active Users</p>
+            </div>
+            <div class="card">
+                <h3>Products</h3>
+                <p id="product"></p>
+            </div>
+        </div>
+        <h2 class="pro-list">Product List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Rating</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    let userLength = JSON.parse(localStorage.getItem("signup_details"))
+    console.log(userLength)
+    document.querySelector(".user").innerHTML =` ${userLength.length} Active User `
+    let productArr = []
+    let proLength = 0
+    async function fetchData() {
+
+        let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/.json`)
+        let data = await res.json()
+        productArr = data
+        proLength = productArr.length
+        console.log(productArr)
+        document.querySelector("#product").innerHTML = `${proLength} Products Available`
+        console.log(proLength)
+        display(productArr)
+    }
+    fetchData()
+
+    function display(data) {
+        let child = ""
+        data.forEach(element => {
+            child += `
+             <tr>
+                <td>${element.name}</td>
+                <td>${element.brand}</td>
+                <td>${element.category}</td>
+                <td>${element.price}</td>
+                <td>${element.ratings}</td>
+                <td><button class="edit-btn" onclick = "edit${element.id}">Edit  </button></td>
+                <td><button class="delete-btn" onclick = "delete${element.id}">Delete</button></td>
+            </tr>
+            `
+
+        });
+        document.querySelector("tbody").innerHTML = child
+    }
+
+</script>
