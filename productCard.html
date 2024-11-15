@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+    <link rel="stylesheet" href="ProductCard.css">
+</head>
+<style>
+</style>
+<body>
+    <div class="wrapper">
+        <div id="search-container">
+            <input type="search" id="search-input" placeholder="Search Product name here..">
+            <button id="search">search</button>
+        </div>
+        <div id="buttons">
+            <button class="btn-all">All</button>
+            <button class="btn-makeup">Makeup</button>
+            <button class="btn-skincare">skincare</button>
+            <button class="btn-Haircare">Haircare</button>
+            <button class="btn-Body-Care">Body Care</button>
+            <button class="btn-Fragrance">Fragrance</button>
+            <button class="btn-Cameras">Cameras</button>
+        
+
+        </div>
+    </div>
+    
+    <div id="price-filter">
+        <label for="min-price">Min Price: ₹</label>
+        <input type="number" id="min-price" placeholder="Min Price" />
+        <label for="max-price">Max Price: ₹</label>
+        <input type="number" id="max-price" placeholder="Max Price" />
+        <button id="filter-price">Apply Filter</button>
+    </div>
+    
+    <div id="container" class="container"></div>
+
+  
+<script>
+  
+  let container = document.getElementById("container");
+let searchInput = document.getElementById("search-input");
+
+async function fetchData() {
+    try {
+        let res = await fetch(
+            'https://nykaa-69cc3-default-rtdb.firebaseio.com/product.json'
+        );
+        let data = await res.json();
+        console.log(data);
+        setupFilters(data); // Set up the filter functionality
+        appendData(data); // Display all products initially
+
+        // Add event listener for the search input
+        searchInput.addEventListener("input", () => searchProducts(data));
+
+        // Add event listeners for price range filter
+        document.getElementById("filter-price").addEventListener("click", () => applyPriceFilter(data));
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// Function to display the cards on the page
+function appendData(data) {
+    container.innerHTML = ""; // Clear previous content
+    data.forEach((item) => container.append(createCard(item)));
+}
+
+// Function to create a product card
+function createCard(item) {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    const image = document.createElement("img");
+    image.src = item.imageUrl;
+    image.alt = item.name;
+    image.classList.add('item-image');
+
+    const title = document.createElement("h2");
+    title.textContent = item.name;
+    title.classList.add("item-title");
+
+    const price = document.createElement("p");
+    price.textContent = `MRP: ₹${item.price.toFixed(2)}`;
+
+    const button = document.createElement("button");
+    button.textContent = "Add To Bag";
+
+    const rating = document.createElement("div");
+    rating.classList.add("rating");
+    rating.innerHTML = renderStars(item.ratings) + `<span>${item.ratings}</span>`;
+
+    card.append(image, title, price, rating, button);
+    return card;
+}
+
+// Function to set up category filter buttons
+function setupFilters(data) {
+    document.querySelector(".btn-all").addEventListener("click", () => appendData(data));
+    document.querySelector(".btn-makeup").addEventListener("click", () => filterCategory(data, "Makeup"));
+    document.querySelector(".btn-skincare").addEventListener("click", () => filterCategory(data, "Skincare"));
+    document.querySelector(".btn-Haircare").addEventListener("click", () => filterCategory(data, "Haircare"));
+    document.querySelector(".btn-Body-Care").addEventListener("click", () => filterCategory(data, "Body Care"));
+    document.querySelector(".btn-Fragrance").addEventListener("click", () => filterCategory(data, "Fragrance"));
+    document.querySelector(".btn-Cameras").addEventListener("click", () => filterCategory(data, "Cameras"));
+}
+
+// Function to filter products by category
+function filterCategory(data, category) {
+    const filteredData = data.filter((item) => item.category === category);
+    appendData(filteredData);
+}
+
+// Function to filter products by search input
+function searchProducts(data) {
+    const searchTerm = searchInput.value.toLowerCase();
+    const filteredData = data.filter((item) => item.name.toLowerCase().includes(searchTerm));
+    appendData(filteredData);
+}
+
+// Function to apply price range filter
+function applyPriceFilter(data) {
+    const minPrice = parseFloat(document.getElementById("min-price").value) || 0;
+    const maxPrice = parseFloat(document.getElementById("max-price").value) || Infinity;
+
+    // Filter the products based on the price range
+    const filteredData = data.filter((item) => item.price >= minPrice && item.price <= maxPrice);
+    appendData(filteredData); // Display the filtered products
+}
+
+// Rating function
+function renderStars(rating) {
+    const fullStars = Math.floor(rating); // Number of full stars
+    const halfStar = rating % 1 >= 0.5 ? 1 : 0; // Check for half star
+    const emptyStars = 5 - fullStars - halfStar; // Remaining stars
+
+    let starHTML = "";
+
+    // Add full stars
+    for (let i = 0; i < fullStars; i++) {
+        starHTML += `<span class="star full">★</span>`;
+    }
+
+    // Add half star if applicable
+    if (halfStar) {
+        starHTML += `<span class="star half">★</span>`;
+    }
+
+    // Add empty stars
+    for (let i = 0; i < emptyStars; i++) {
+        starHTML += `<span class="star empty">☆</span>`;
+    }
+
+    return starHTML;
+}
+
+fetchData();
+
+
+
+</script>
+</body>
+</html>
