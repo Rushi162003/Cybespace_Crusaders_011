@@ -1,0 +1,136 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Calibri, sans-serif;
+    background-color: rgb(243, 243, 243);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 10px 5%;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+header img {
+    width: 120px;
+    transition: transform 0.3s ease;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+}
+
+header h3 {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    padding: 10px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+header h3:hover {
+    color: #ff4c4c;
+}
+
+header h3.active {
+    border-bottom: 3px solid red;
+    color: red;
+}
+
+/* Section Styles */
+#par2 {
+    padding: 80px 10% 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#part1 h4, #part2 h3 {
+    margin: 20px 0;
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+input[type="text"], input[type="email"], input[type="number"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, textarea:focus {
+    border-color: #ff4c4c;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff4c4c;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff1a1a;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+    header {
+        padding: 10px;
+    }
+    header img {
+        width: 90px;
+    }
+    #par2 {
+        padding: 80px 5% 20px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    header img {
+        width: 80px;
+    }
+    #par2 {
+        padding: 60px 5% 20px;
+    }
+    input[type="text"], input[type="email"], input[type="number"], textarea {
+        font-size: 14px;
+    }
+}
+
+/* Animation for Fade-In */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

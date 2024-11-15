@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Mode</title>
+
+    <link rel="stylesheet" href="cartpay.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="https://d2un9pqbzgw43g.cloudfront.net/main/nykaa-1200x800-1.png" alt="">
+        </div>
+        <div>
+            <h3> LOGIN </h3>
+        </div>
+        <div>
+            <h3> ADDRESS </h3>
+        </div>
+        <div>
+            <h3 style="border-bottom: 3px solid red; color: red;"> PAYMENT </h3>
+        </div>
+    </header>
+    <div id="par2">
+        <div id="part1">
+            <h4> PAYMENT </h4>
+        </div>
+        <div id="part2">
+            <div id="pic2">
+                <div>
+                    <img src="https://logowik.com/content/uploads/images/787_mastercard.jpg" alt="">
+                    <h3> Card Payment </h3>
+                </div>
+            </div>
+            <button id="but1"> Enter Card Details </button>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector("#but1").addEventListener("click", pa1);
+
+        function pa1() {
+            window.location.href = "payment.html"
+        }
+    </script>
+</body>
+
+</html>

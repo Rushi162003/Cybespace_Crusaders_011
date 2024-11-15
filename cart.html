@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="cart.css">
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="https://d2un9pqbzgw43g.cloudfront.net/main/nykaa-1200x800-1.png" alt="Logo">
+        </div>
+        <div>
+            <h3 style="border-bottom: 3px solid red; color: red;"> LOGIN </h3>
+        </div>
+        <div>
+            <h3> ADDRESS </h3>
+        </div>
+        <div>
+            <h3> PAYMENT </h3>
+        </div>
+    </header>
+
+    <div id="par2">
+        <div id="part1">
+            <h4> Login/Register </h4>
+        </div>
+        <div id="part2">
+            <h4> Login or Register </h4>
+            <hr>
+            <h4> <span class="tick">&#10004;</span> Get Reward Points on new registration </h4>
+            <h4> <span class="tick">&#10004;</span> Redeem your Coupons & Reward Points </h4>
+            <br>
+            <input type="text" id="num2" placeholder="Or Enter Email Or Phone Number ">
+            <br>
+            <button id="but1"> NEXT ></button>
+        </div>
+        <div id="part3">
+            <div id="add1">
+                <div id="container">
+                    <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQILdgS2XQDAKSKKOQp6sEU1ZLgICkzHewKhw&usqp=CAU"
+                        id="img2" alt=""> -->
+                    <!-- <div>
+                        <h5 id="nameof"></h5>
+                        <h5 id="sizeof"> L </h5>
+                    </div> -->
+                </div>
+                <div id="box2">
+                    <div>
+                        <h4> Shipping Charge </h4>
+                        <h4> Free </h4>
+                    </div>
+                    <hr>
+                    <div>
+                        <h4>Grand Total </h4>
+                        <h4 class="totalprice"> </h4>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        document.querySelector("#but1").addEventListener("click", check);
+
+        function check(e) {
+            var number = document.querySelector("#num2").value;
+
+            if (number.length < 10) {
+                swal({
+                    title: "Incorrect Information ",
+                    text: "Please Check Properly",
+                    button: "Ok",
+                });
+            } else {
+                window.location.href = "address.html";
+            }
+        }
+    </script>
+</body>
+
+</html>

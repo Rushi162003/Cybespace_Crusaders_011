@@ -1,0 +1,204 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Calibri, sans-serif;
+    background-color: rgb(243, 243, 243);
+}
+
+/* Header */
+header {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+header > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+header > div > img {
+    width: 120px;
+}
+
+header h3 {
+    margin: 0 10px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+header h3[style*="red"] {
+    color: #fc2779;
+    border-bottom: 3px solid #fc2779;
+}
+
+/* Main Content */
+#par2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 100px;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Part Containers */
+#part1, #part2, #part3 {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 280px;
+    margin: 10px;
+}
+
+/* Title and Text */
+#part1 > h4 {
+    color: #333;
+    font-size: 1.2rem;
+    background-color: #fc2779;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+#part2 h4, #part2 h3 {
+    color: #333;
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+.tick {
+    color: rgb(0, 241, 0);
+    margin-right: 5px;
+}
+
+/* Input Fields */
+#num2 {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#but1 {
+    width: 100%;
+    padding: 15px;
+    background-color: #fc2779;
+    color: white;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s ease;
+}
+
+#but1:hover {
+    background-color: #e01e65;
+    transform: scale(1.05);
+}
+
+/* Box Styling */
+#box1, #box2 {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#box1 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+#img2 {
+    width: 90px;
+    height: 100px;
+    padding: 20px;
+}
+
+#box2 > div {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+/* Shipping and Total Section */
+#box2 {
+    margin-top: 20px;
+}
+
+.totalprice {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+#box2 p {
+    color: #777;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+    /* Mobile */
+    #par2 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #part1, #part2, #part3 {
+        width: 90%;
+        margin: 10px 0;
+    }
+
+    #but1 {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    #box1 {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #box2 {
+        width: 90%;
+    }
+
+    #img2 {
+        width: 80px;
+        height: 90px;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    /* Large Screens */
+    #par2 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 100px;
+    }
+
+    #part1, #part2, #part3 {
+        width: 30%;
+    }
+
+    #but1 {
+        font-size: 1.2rem;
+        padding: 15px;
+    }
+}
