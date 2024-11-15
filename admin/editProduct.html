@@ -93,17 +93,16 @@
     let imageUrl = document.querySelector("#imageUrl")
     let param = new URLSearchParams(window.location.search)
     let id = param.get("id")
-    console.log(id)
+    // console.log(id)
 
 
     async function fetchData() {
         try {
-            // Ensure 'id' is defined somewhere in your code
             let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`);
             let data = await res.json();
 
-            // Check if data exists and is an object before accessing properties
-            if (data) {
+            // Check if data exists and is an object
+            if (data && typeof data === 'object') {
                 name.value = data.name || '';
                 brand.value = data.brand || '';
                 category.value = data.category || '';
@@ -113,38 +112,51 @@
                 rating.value = data.ratings || '';
                 reviewsCount.value = data.reviewsCount || '';
                 imageUrl.value = data.imageUrl || '';
-                console.log(data);
-
-                let categoryElement = document.querySelector("#category");
-                categoryElement.innerHTML = ""; // Optional: clear existing options
-
-                let uniqueCategories = new Set();
-
-                // Check if data is an array
-                if (Array.isArray(data)) {
-                    data.forEach(element => {
-                        if (element.category && !uniqueCategories.has(element.category)) {
-                            uniqueCategories.add(element.category);
-                            let option = document.createElement("option");
-                            option.value = element.category;
-                            option.textContent = element.category;
-                            categoryElement.appendChild(option);
-                        }
-                    });
-                } else {
-                    console.error("Response is not an array:", data);
-                }
+                console.log("Product data loaded:", data);
             } else {
-                console.error("No data received or data is null:", data);
+                console.error("No valid product data received:", data);
             }
         } catch (error) {
             alert("Failed to fetch product data");
-            console.log(error);
+            console.error(error);
         }
     }
 
-    fetchData();
 
+
+    async function categoryAdd() {
+        try {
+            let res = await fetch("https://nayka-4ffd7-default-rtdb.firebaseio.com/.json");
+            let resp = await res.json();
+            console.log(resp);
+
+            let categoryElement = document.querySelector("#category");
+
+            // Clear any existing options (optional)
+            categoryElement.innerHTML = "";
+            let uniqueCategories = new Set();
+
+            // Check if resp is an array
+            if (Array.isArray(resp)) {
+                resp.forEach(element => {
+                    if (element.category && !uniqueCategories.has(element.category)) {
+                        uniqueCategories.add(element.category);
+                        let option = document.createElement("option");
+                        option.value = element.category;
+                        option.textContent = element.category;
+                        categoryElement.appendChild(option);
+                    }
+                });
+            } else {
+                console.error("Response is not an array:", resp);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    categoryAdd()
+    fetchData();
     let form = document.querySelector("#addProduct")
 
 
@@ -202,11 +214,11 @@
             rating.value = data.ratings
             reviewsCount.value = data.reviewsCount
             imageUrl.value = data.imageUrl
-            console.log(data)
+            // console.log(data)
         }
         catch (error) {
             alert("Product was not added")
-            console.log(error)
+            // console.log(error)
         }
     }
 

@@ -12,23 +12,32 @@ if (loginCheck) {
     let userLength = JSON.parse(localStorage.getItem("signup_details"))
     console.log(userLength)
     document.querySelector(".user").innerHTML = ` ${userLength.length} Active User `
+    // Define array for operation 
     let productArr = []
     let proLength = 0
+
+
+    // Fetch data from firebase 
     async function fetchData() {
 
+        // fetch data 
         let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/.json`)
         let data = await res.json()
+
+        // set data to productArr And length
         productArr = data
         proLength = productArr.length
-        console.log(productArr)
+
         document.querySelector("#product").innerHTML = `${proLength} Products Available`
-        console.log(proLength)
-        display(productArr)
+        display(data)
     }
+    // call fetch data 
     fetchData()
 
+    // Display data from fetch using firebase
     function display(data) {
         let child = ""
+        console.log(data)
         data.forEach(element => {
             child += `
              <tr>
@@ -38,16 +47,39 @@ if (loginCheck) {
                 <td>${element.price}</td>
                 <td>${element.ratings}</td>
                 <td><button class="edit-btn" onclick = "edit(${element.id})">Edit  </button></td>
-                <td><button class="delete-btn" onclick = "delete${element.id}">Delete</button></td>
+                <td><button class="delete-btn" onclick = "deleteProduct(${element.id})">Delete</button></td>
             </tr>
             `
 
         });
         document.querySelector("tbody").innerHTML = child
     }
+
+    // Redirect to Edit html page
     function edit(id) {
         window.location.href = `editProduct.html?id=${id}`
     }
+
+
+    // deleteProduct funciton for delete item from firebase 
+    // Define the deleteProduct function and attach it to the window object
+    window.deleteProduct = async function (id) {
+        try {
+            let request = {
+                method: "DELETE",
+                redirect: "follow"
+            };
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`, request);
+            let data = await res.json();
+            console.log(data);
+            alert("Product deleted successfully");
+
+            // Refresh product list after deletion (optional)
+            fetchData();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     // Logut button 
     const logoutButton = document.querySelector("#logout-button");
