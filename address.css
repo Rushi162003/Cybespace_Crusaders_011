@@ -1,0 +1,228 @@
+/* Universal reset for margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Header styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 10px 5%;
+    height: 80px;
+}
+
+header img {
+    width: 100px;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+}
+
+header div h3 {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Highlight the current step */
+header div h3:nth-child(3) {
+    border-bottom: 3px solid red;
+    color: red;
+}
+/* Base styling for the address section */
+#par2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    margin: auto;
+    max-width: 1200px;
+}
+
+#part1 {
+    flex: 1 1 100%;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fc2779;
+    margin-bottom: 20px;
+}
+
+#part2 {
+    flex: 1 1 60%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#part2:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#part2 h3, #part2 h4, #part2 h5 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.look {
+    width: 95%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.look:focus {
+    outline: none;
+    border-color: #fc2779;
+    box-shadow: 0 0 4px rgba(252, 39, 121, 0.5);
+}
+
+#ttarea {
+    resize: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#but2 {
+    background-color: #fc2779;
+    color: white;
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#but2:hover {
+    background-color: #d72c6a;
+    transform: scale(1.05);
+}
+
+#part3 {
+    flex: 1 1 35%;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#box2 div {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+#box2 div h4 {
+    color: #333;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+/* Automation: Highlight "Shipping Charge" and "Grand Total" */
+#box2 div h4:nth-child(2) {
+    color: #fc2779;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+    #par2 {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    #part2, #part3 {
+        width: 100%;
+    }
+
+    #part2 {
+        margin-bottom: 20px;
+    }
+
+    #look, #ttarea, #but2 {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    #part2 {
+        padding: 15px;
+    }
+
+    #look, #ttarea {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    #but2 {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+}
+
+
+
+/* Responsive styles for header */
+@media only screen and (max-width: 768px) {
+    header {
+        padding: 10px 3%;
+    }
+
+    header img {
+        width: 80px;
+    }
+
+    header div h3 {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    header img {
+        width: 70px;
+    }
+
+    header div h3 {
+        font-size: 14px;
+        margin-left: 0;
+        padding: 5px 0;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    header {
+        padding: 15px 10%;
+    }
+
+    header img {
+        width: 120px;
+    }
+}
