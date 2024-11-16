@@ -1,42 +1,51 @@
+/* Universal reset for margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Header styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 10px 5%;
+    height: 80px;
+}
+
+header img {
+    width: 100px;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+}
+
+header div h3 {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Highlight the current step */
+header div h3:nth-child(3) {
+    border-bottom: 3px solid red;
+    color: red;
+}
+
 /* General Styles */
 body {
     margin: 0;
     padding: 0;
     font-family: Calibri, sans-serif;
     background-color: rgb(243, 243, 243);
-}
-
-/* Header */
-header {
-    display: flex;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-}
-
-header > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-}
-
-header > div > img {
-    width: 120px;
-}
-
-header h3 {
-    margin: 0 10px;
-    font-size: 1.2rem;
-    color: #333;
-}
-
-header h3[style*="red"] {
-    color: #fc2779;
-    border-bottom: 3px solid #fc2779;
 }
 
 /* Main Content */
@@ -200,5 +209,48 @@ header h3[style*="red"] {
     #but1 {
         font-size: 1.2rem;
         padding: 15px;
+    }
+}
+
+/* Responsive styles for header */
+@media only screen and (max-width: 768px) {
+    header {
+        padding: 10px 3%;
+    }
+
+    header img {
+        width: 80px;
+    }
+
+    header div h3 {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    header img {
+        width: 70px;
+    }
+
+    header div h3 {
+        font-size: 14px;
+        margin-left: 0;
+        padding: 5px 0;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    header {
+        padding: 15px 10%;
+    }
+
+    header img {
+        width: 120px;
     }
 }

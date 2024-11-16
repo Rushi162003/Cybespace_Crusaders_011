@@ -16,17 +16,10 @@ header {
     height: 80px;
     position: relative;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: padding 0.3s ease;
 }
 
 header img {
     width: 120px;
-    transition: width 0.3s ease;
-}
-
-header div {
-    display: flex;
-    align-items: center;
 }
 
 header div h3 {
@@ -36,14 +29,6 @@ header div h3 {
     color: #333;
     padding: 10px;
     cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-/* Header navigation (Steps: 1-LOGIN, 2-ADDRESS, 3-PAYMENT) */
-header div h3:nth-child(1),
-header div h3:nth-child(2),
-header div h3:nth-child(3) {
-    color: black;
 }
 
 header div h3:nth-child(3) {
@@ -59,7 +44,6 @@ header div h3:nth-child(3) {
     justify-content: center;
     margin-top: 100px;
     padding: 20px;
-    transition: margin-top 0.3s ease;
 }
 
 #part1, #part2 {
@@ -69,7 +53,6 @@ header div h3:nth-child(3) {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     margin: 10px 0;
     width: 60%;
-    transition: width 0.3s ease, box-shadow 0.3s ease;
 }
 
 #part1 h4 {
@@ -79,41 +62,31 @@ header div h3:nth-child(3) {
     margin: 0;
 }
 
-/* Payment Methods */
-#pic2 {
+/* Payment Method Cards */
+#pic2 div{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
     flex-wrap: wrap;
     margin: 20px 0;
-    transition: margin 0.3s ease;
-}
-
-#pic2 > div {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 20px;
-    width: 160px;
-    height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-#pic2 > div:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
 }
 
 #pic2 img {
-    width: 100%;
-    height: 60%;
-    border-radius: 14px;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0,0,0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+#pic2 img:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Button Styles */
 #but1 {
     width: 100%;
     padding: 15px;
@@ -123,7 +96,7 @@ header div h3:nth-child(3) {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s, transform 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 #but1:hover {
@@ -131,92 +104,39 @@ header div h3:nth-child(3) {
     transform: scale(1.05);
 }
 
-/* Responsive media queries */
+/* Responsive Media Queries */
 @media only screen and (max-width: 768px) {
-    header div {
-        margin-top: 10px;
+    #pic2 {
+        gap: 10px;
     }
 
-    .mainAddress {
-        margin-top: 20px;
-    }
-
-    .addressForm {
-        padding: 15px;
-    }
-
-    .addressForm h1 {
-        font-size: 1.3rem;
-    }
-
-    .addressForm p,
-    .addressForm input {
-        font-size: 0.9rem;
-    }
-
-    .addressForm #submit {
-        padding: 12px;
-        font-size: 0.9rem;
+    #pic2 img {
+        width: 60px;
     }
 
     #par2 {
-        margin-top: 50px;
-        padding: 10px;
-    }
-
-    #pic2 > div {
-        width: 45%;
+        width: 80%;
     }
 }
 
 @media only screen and (max-width: 480px) {
-    header {
-        padding: 10px;
+    #pic2 {
+        flex-direction: row;
+        justify-content: center;
+        gap: 5px;
     }
 
-    header img {
-        width: 80px;
+    #pic2 img {
+        width: 50px;
     }
 
-    .addressForm {
-        width: 90%;
-        padding: 10px;
-    }
-
-    .addressForm h1 {
-        font-size: 1.2rem;
-    }
-
-    .addressForm p,
-    .addressForm input {
-        font-size: 0.85rem;
-    }
-
-    .addressForm #submit {
-        padding: 10px;
-        font-size: 0.85rem;
-    }
-
-    #pic2 > div {
+    #par2 {
         width: 90%;
     }
 }
 
 @media only screen and (min-width: 1024px) {
-    .addressForm {
-        width: 50%;
-        padding: 25px;
-    }
-
-    header {
-        padding: 15px 10%;
-    }
-
-    #par2 {
-        margin-top: 120px;
-    }
-
-    #pic2 > div {
-        width: 160px;
+    #pic2 img {
+        width: 100px;
     }
 }
