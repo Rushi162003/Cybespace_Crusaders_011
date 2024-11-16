@@ -1,13 +1,12 @@
-/* General Styles */
-body {
+/* Universal reset for margin and padding */
+* {
     margin: 0;
     padding: 0;
-    font-family: Calibri, sans-serif;
-    background-color: rgb(243, 243, 243);
-    transition: all 0.3s ease-in-out;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-/* Header Styles */
+/* Header styles */
 header {
     display: flex;
     justify-content: space-between;
@@ -15,17 +14,10 @@ header {
     background-color: white;
     padding: 10px 5%;
     height: 80px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    transition: background-color 0.3s ease;
 }
 
 header img {
-    width: 120px;
-    transition: transform 0.3s ease;
+    width: 100px;
 }
 
 header div {
@@ -33,104 +25,204 @@ header div {
     align-items: center;
 }
 
-header h3 {
+header div h3 {
     margin-left: 10px;
     font-size: 18px;
     font-weight: 500;
     color: #333;
     padding: 10px;
     cursor: pointer;
-    transition: color 0.3s ease;
 }
 
-header h3:hover {
-    color: #ff4c4c;
-}
-
-header h3.active {
+/* Highlight the current step */
+header div h3:nth-child(3) {
     border-bottom: 3px solid red;
     color: red;
 }
-
-/* Section Styles */
+/* Base styling for the address section */
 #par2 {
-    padding: 80px 10% 20px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    margin: auto;
+    max-width: 1200px;
 }
 
-#part1 h4, #part2 h3 {
-    margin: 20px 0;
-    color: #333;
-    font-size: 24px;
+#part1 {
+    flex: 1 1 100%;
     text-align: center;
-    animation: fadeIn 1s ease-in-out;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fc2779;
+    margin-bottom: 20px;
 }
 
-input[type="text"], input[type="email"], input[type="number"], textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border 0.3s ease;
+#part2 {
+    flex: 1 1 60%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, textarea:focus {
-    border-color: #ff4c4c;
-    outline: none;
+#part2:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-button {
-    width: 100%;
+#part2 h3, #part2 h4, #part2 h5 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.look {
+    width: 95%;
     padding: 12px;
-    background-color: #ff4c4c;
-    border: none;
-    color: white;
-    font-size: 18px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #ff1a1a;
+.look:focus {
+    outline: none;
+    border-color: #fc2779;
+    box-shadow: 0 0 4px rgba(252, 39, 121, 0.5);
+}
+
+#ttarea {
+    resize: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#but2 {
+    background-color: #fc2779;
+    color: white;
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#but2:hover {
+    background-color: #d72c6a;
+    transform: scale(1.05);
+}
+
+#part3 {
+    flex: 1 1 35%;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#box2 div {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+#box2 div h4 {
+    color: #333;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+/* Automation: Highlight "Shipping Charge" and "Grand Total" */
+#box2 div h4:nth-child(2) {
+    color: #fc2779;
+    font-weight: bold;
 }
 
 /* Responsive Design */
 @media only screen and (max-width: 768px) {
-    header {
+    #par2 {
+        flex-direction: column;
         padding: 10px;
     }
-    header img {
-        width: 90px;
-    }
-    #par2 {
-        padding: 80px 5% 20px;
-    }
-}
 
-@media only screen and (max-width: 480px) {
-    header img {
-        width: 80px;
+    #part2, #part3 {
+        width: 100%;
     }
-    #par2 {
-        padding: 60px 5% 20px;
+
+    #part2 {
+        margin-bottom: 20px;
     }
-    input[type="text"], input[type="email"], input[type="number"], textarea {
+
+    #look, #ttarea, #but2 {
         font-size: 14px;
     }
 }
 
-/* Animation for Fade-In */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
+@media only screen and (max-width: 480px) {
+    #part2 {
+        padding: 15px;
     }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
+
+    #look, #ttarea {
+        width: 100%;
+        font-size: 12px;
+    }
+
+    #but2 {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+}
+
+
+
+/* Responsive styles for header */
+@media only screen and (max-width: 768px) {
+    header {
+        padding: 10px 3%;
+    }
+
+    header img {
+        width: 80px;
+    }
+
+    header div h3 {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    header img {
+        width: 70px;
+    }
+
+    header div h3 {
+        font-size: 14px;
+        margin-left: 0;
+        padding: 5px 0;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    header {
+        padding: 15px 10%;
+    }
+
+    header img {
+        width: 120px;
     }
 }
