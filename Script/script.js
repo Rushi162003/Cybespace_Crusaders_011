@@ -7,21 +7,38 @@ const btnPreve = document.querySelector(".btn-container-prev")
 const btnNext = document.querySelector(".btn-container-next")
 const ImageContainerSlider = document.querySelector("#imageSlideContaienr")
 
-btnNext.addEventListener("click",()=>{
+btnNext.addEventListener("click", () => {
     ImageContainerSlider.scrollLeft += 200;
 })
 
-btnPreve.addEventListener("click",()=>{
+btnPreve.addEventListener("click", () => {
     ImageContainerSlider.scrollLeft -= 100
 })
 
 
+
+console.log(localStorage.getItem("currentUserEmail"))
+
+fetch('navbar.html')
+    .then(response => response.text())
+    .then(data => {
+        document.querySelector('.navbar').innerHTML = data;
+    });
+
+fetch('footer.html')
+    .then(response => response.text())
+    .then(data => {
+        document.querySelector('.footer').innerHTML = data;
+    });
+
+
+
 const listofProductEL = document.querySelector(".listofProduct")
 
-let listofProductHTMl = "" ;
+let listofProductHTMl = "";
 
-for(let i  = 0 ; i < listofProduct.length ; i++){
-    listofProductHTMl  += `
+for (let i = 0; i < listofProduct.length; i++) {
+    listofProductHTMl += `
     <a href="#">
         <img src="${listofProduct[i].img}"/>
         <p>${listofProduct[i].dis}</p>
@@ -35,7 +52,7 @@ const brandTopproductEl = document.querySelector(".brandTopproduct")
 
 let brandTopproductHTML = ""
 
-for(let i = 0 ; i < topbrands.length ; i++){
+for (let i = 0; i < topbrands.length; i++) {
     brandTopproductHTML += `
     <a href="#">
         <img src="${topbrands[i].img}"/>
@@ -50,7 +67,7 @@ brandTopproductEl.innerHTML = brandTopproductHTML
 const hardToResistDeals_image = document.querySelector(".hardToResistDeals_image")
 let hardToResistDeals_imageHTML = ""
 
-for(let i = 0 ; i < hardtoResistDeals.length ; i++){
+for (let i = 0; i < hardtoResistDeals.length; i++) {
     hardToResistDeals_imageHTML += `
     <a href="#">
         <img src="${hardtoResistDeals[i]}"/>

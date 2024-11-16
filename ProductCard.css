@@ -1,4 +1,4 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -6,35 +6,42 @@
     outline: none;
     font-family: sans-serif;
 }
-body{
+
+body {
     background-color: #f5f8ff;
     overflow-x: hidden;
 
 }
-.wrapper{
-    margin: 0 auto;
-    text-align: center;
+
+.wrapper {
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
 
 }
-#search-container{
+
+#search-container {
     margin: 1em 0;
 
 }
-#search-container input{
+
+#search-container input {
     background-color: transparent;
     width: 40%;
     border-bottom: 2px solid #110f29;
     padding: 1em 0.3em;
 }
-#search-container input:focus{
+
+#search-container input:focus {
     border-bottom-color: #72e31b;
 }
-#search-container button{
-    
+
+#search-container button {
+
     padding: 1em, 2em;
     margin-left: 1em;
     background-color: #E80071;
-    color:#ffffff;
+    color: #ffffff;
     border-radius: 5px;
     margin-top: 0.5em;
     -webkit-border-radius: 5px;
@@ -43,15 +50,20 @@ body{
     -o-border-radius: 5px;
     width: 100px;
 }
-#search-input{
+
+/* #search-input {
     width: 100px;
     font-weight: 400;
     font-size: 15px;
+} */
+#buttons{
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
-#buttons button{
+#buttons button {
     width: 100px;
     border: 2px solid #E80071;
-    padding: 1em,2.2em;
+    padding: 1em, 2.2em;
     border-radius: 3em;
     background-color: transparent;
     color: #E80071;
@@ -61,33 +73,38 @@ body{
     -ms-border-radius: 3em;
     -o-border-radius: 3em;
 }
-.active{
+
+.active {
     background-color: #E80071;
-    color:#ffffff
+    color: #ffffff
 }
-#min-price{
+
+#min-price {
     font-weight: 400;
     font-size: 15px;
 }
-#max-price{
+
+#max-price {
     font-size: 15px;
     font-weight: 400;
 }
 
 
-.product-container{
+.product-container {
     display: flex;
-    
+
 }
+
 /* end */
-.container{
+.container {
     display: grid;
     flex-wrap: wrap;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(5, 1fr);
     padding: 20px;
 }
-.card{
-    
+
+.card {
+
     height: 450px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -105,10 +122,12 @@ body{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     transition: transform 0.2s ease, box-shadow 0.3s ease-in-out;
 }
+
 .card:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
+
 /*Start add-tobag*/
 .add-to-bag {
     position: absolute;
@@ -124,6 +143,7 @@ body{
     transition: opacity 0.3s ease, transform 0.3s ease;
     opacity: 0;
 }
+
 .add-to-bag:hover {
     background-color: #d91b68;
     text-align: center;
@@ -132,7 +152,8 @@ body{
 .card:hover .add-to-bag {
     opacity: 1;
 }
-.removeBtn{
+
+.removeBtn {
     background-color: none;
     margin-top: -50px;
 }
@@ -140,11 +161,12 @@ body{
 /*end-to-bag*/
 
 
-.item-image{
+.item-image {
     width: 100%;
     height: 60%;
 }
-button{
+
+button {
     margin-top: 10px;
     height: 40px;
     width: 90%;
@@ -154,7 +176,7 @@ button{
     border-radius: 10px;
     font-size: medium;
     letter-spacing: 0.1px;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
     line-height: 24px;
     /*margin: 0 50px;*/
@@ -164,10 +186,12 @@ button{
     -o-border-radius: 10px;
     cursor: pointer;
 }
-button:hover{
+
+button:hover {
     background-color: #461b31;
 }
-.item-title{
+
+.item-title {
     font-size: 20px;
     font-weight: 600;
     line-height: 20px;
@@ -179,6 +203,7 @@ button:hover{
     color: #001325;
     text-overflow: ellipsis;
 }
+
 /* start rating css*/
 .rating {
     display: flex;
@@ -186,39 +211,44 @@ button:hover{
     gap: 5px;
     font-size: 18px;
     justify-content: center;
-    margin-top:5px ;
+    margin-top: 5px;
 }
 
 .rating .star {
     font-size: 20px;
-    color: #ffd700; /* Gold color for stars */
+    color: #ffd700;
+    /* Gold color for stars */
 }
 
 .rating .star.empty {
-    color: #ccc; /* Gray color for empty stars */
+    color: #ccc;
+    /* Gray color for empty stars */
 }
 
 .rating span {
     font-size: 16px;
     color: #333;
 }
+
 /* rating end*/
 
-#filter-price{
+#filter-price {
     width: 120px;
     font-size: 15px;
     height: 40px;
 
 
 }
-#price-filter>label{
+
+#price-filter>label {
     font-size: 18px;
     padding-left: 20px;
     font-weight: 600;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 }
-#price-filter input{
+
+#price-filter input {
     background-color: transparent;
     border-bottom: 2px solid #110f29;
     padding: 1em 0.3em;
@@ -229,28 +259,41 @@ button:hover{
 /*start cart*/
 #cart {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 60px;
+    right: 40px;
     z-index: 1000;
     font-family: Arial, sans-serif;
 }
 
 #cart-button {
-    width: 150px;
+    /* width: 150px;
     background-color: #ff007f;
     color: white;
     border: none;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 16px; */
+    /* display: inline-flex; */
+    /* align-items: center;
+    justify-content: center; */
+    padding: 0px 16px;
+    width: auto;
+    background-color: #e6007e;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    font-size: 13px;
+
+    height: 35px;
 }
 
 #cart-content {
     margin-top: 50px;
     position: fixed;
     top: 50px;
-    right: -450px; /* Initially hidden */
+    right: -450px;
+    /* Initially hidden */
     width: 400px;
     /* height: 100%; */
     background: rgb(255 93 161);
@@ -262,9 +305,19 @@ button:hover{
 }
 
 #cart-content.active {
-    right: 10px; /* Slides into view */
+    right: 10px;
+    /* Slides into view */
 }
-
+.g_topbanner{
+    padding-bottom: 15px;
+    align-items: center;
+}
+.g_topbanner a{
+    margin-top: 10px;
+}
+#offerImage{
+    margin-top: -15px;
+}
 #cart-items {
     max-height: 500px;
     overflow-y: auto;
@@ -296,7 +349,8 @@ button:hover{
     cursor: pointer;
     width: 100%;
 }
-.remove-item{
+
+.remove-item {
     width: 150px;
 }
 
@@ -310,20 +364,24 @@ button:hover{
 /* Small devices (phones, up to 600px wide) */
 @media screen and (max-width: 600px) {
     #search-container input {
-        width: 80%; /* Adjust input width for smaller screens */
+        width: 80%;
+        /* Adjust input width for smaller screens */
     }
 
     #search-container button {
-        width: 80px; /* Smaller button size */
+        width: 80px;
+        /* Smaller button size */
     }
 
     .container {
-        grid-template-columns: repeat(1, 1fr); /* Single-column layout for cards */
+        grid-template-columns: repeat(1, 1fr);
+        /* Single-column layout for cards */
         padding: 10px;
     }
 
     .card {
-        width: 90%; /* Adjust card width to fit small screens */
+        width: 90%;
+        /* Adjust card width to fit small screens */
         margin: 10px auto;
     }
 
@@ -339,15 +397,18 @@ button:hover{
 /* Medium devices (tablets, 601px to 992px wide) */
 @media screen and (min-width: 601px) and (max-width: 992px) {
     #search-container input {
-        width: 60%; /* Adjust input width for tablets */
+        width: 60%;
+        /* Adjust input width for tablets */
     }
 
     .container {
-        grid-template-columns: repeat(2, 1fr); /* Two-column layout for cards */
+        grid-template-columns: repeat(2, 1fr);
+        /* Two-column layout for cards */
     }
 
     .card {
-        width: 90%; /* Adjust card width to fit tablets */
+        width: 90%;
+        /* Adjust card width to fit tablets */
     }
 
     .item-title {
@@ -362,14 +423,17 @@ button:hover{
 /* Large devices (desktops, 993px and up) */
 @media screen and (min-width: 993px) {
     #search-container input {
-        width: 40%; /* Default input width for larger screens */
+        width: 40%;
+        /* Default input width for larger screens */
     }
 
     .container {
-        grid-template-columns: repeat(5, 1fr); /* Default five-column layout for cards */
+        grid-template-columns: repeat(5, 1fr);
+        /* Default five-column layout for cards */
     }
 
     .card {
-        width: 250px; /* Default card width */
+        width: 250px;
+        /* Default card width */
     }
 }

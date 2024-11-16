@@ -104,6 +104,7 @@
         #box2>div {
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
         #par2 {
@@ -195,7 +196,7 @@
                     <hr>
                     <div>
                         <h4>Grand Total </h4>
-                        <h4 class="totalprice"> </h4>
+                        <h4 class="totalprice">₹ </h4>
                     </div>
                     <hr>
                 </div>
@@ -206,7 +207,7 @@
 
 </html>
 
-<script type = "module" src="./scripts/cart.js"></script>
+<script type="module" src="./scripts/cart.js"></script>
 <script>
 
     // let userStack = JSON.parse(localStorage.getItem("userDataBase")) ; 
@@ -227,7 +228,8 @@
     // totalof.textContent = userDataBase.totalof; 
 
     document.querySelector("#but2").addEventListener("click", page);
-
+    let grandTotal = localStorage.getItem("cartTotal")
+    document.querySelector(".totalprice").textContent += grandTotal
     function page() {
 
         alert("Address Filled Successfully");

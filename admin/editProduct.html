@@ -73,7 +73,7 @@
                     <label for="imageUrl">Image URL</label>
                     <input type="text" id="imageUrl" placeholder="Enter image URL">
                 </div>
-                <input type="submit" class="btn" value="Add Product">
+                <input type="submit" id="form_submit" class="btn" value="Update Product">
             </div>
         </form>
     </div>
@@ -98,7 +98,7 @@
 
     async function fetchData() {
         try {
-            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`);
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id-1}.json`);
             let data = await res.json();
 
             // Check if data exists and is an object
@@ -157,23 +157,22 @@
 
     categoryAdd()
     fetchData();
-    let form = document.querySelector("#addProduct")
+    let form = document.querySelector("#form_submit")
 
 
-    form.addEventListener("submit", getProduct)
+    form.addEventListener("click", getProduct)
 
     function getProduct() {
         event.preventDefault()
-
-        let name = document.querySelector("#name")
-        let brand = document.querySelector("#brand")
-        let category = document.querySelector("#category")
-        let price = document.querySelector("#price")
-        let currency = document.querySelector("#currency")
-        let stockStatus = document.querySelector("#stockStatus")
-        let rating = document.querySelector("#rating")
-        let reviewsCount = document.querySelector("#reviewsCount")
-        let imageUrl = document.querySelector("#imageUrl")
+        let name = document.querySelector("#name").value
+        let brand = document.querySelector("#brand").value
+        let category = document.querySelector("#category").value
+        let price = document.querySelector("#price").value
+        let currency = document.querySelector("#currency").value
+        let stockStatus = document.querySelector("#stockStatus").value
+        let rating = document.querySelector("#rating").value
+        let reviewsCount = document.querySelector("#reviewsCount").value
+        let imageUrl = document.querySelector("#imageUrl").value
 
         let proObj = {
             name: name,
@@ -188,12 +187,13 @@
         }
         addProduct(proObj)
     }
-
+    
     async function addProduct(proObj) {
         var headers = new Headers()
         headers.append("Content-Type", "application/json")
         // Ganerate Random id
-
+        
+        console.log(id)
         let request = {
             method: "PATCH",
             headers: headers,
@@ -202,19 +202,21 @@
         }
 
         try {
-            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`)
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id-1}.json`, request)
             let data = await res.json()
 
-            name.value = data.name
-            brand.value = data.brand
-            category.value = data.category
-            price.value = data.price
-            currency.value = data.currency
-            stockStatus.value = data.stockStatus
-            rating.value = data.ratings
-            reviewsCount.value = data.reviewsCount
-            imageUrl.value = data.imageUrl
+            // name.value = data.name
+            // brand.value = data.brand
+            // category.value = data.category
+            // price.value = data.price
+            // currency.value = data.currency
+            // stockStatus.value = data.stockStatus
+            // rating.value = data.ratings
+            // reviewsCount.value = data.reviewsCount
+            // imageUrl.value = data.imageUrl
             // console.log(data)
+            alert("Product was updated")
+            // window.location.href="admin.html"
         }
         catch (error) {
             alert("Product was not added")

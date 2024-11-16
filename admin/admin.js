@@ -65,29 +65,34 @@ if (loginCheck) {
     // Define the deleteProduct function and attach it to the window object
     window.deleteProduct = async function (id) {
         try {
-            let request = {
-                method: "DELETE",
-                redirect: "follow"
-            };
-            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`, request);
-            let data = await res.json();
-            console.log(data);
-            alert("Product deleted successfully");
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`, {
+                method: "DELETE", // Use DELETE method
+                redirect: "follow" // Follow redirects if necessary
+            });
 
-            // Refresh product list after deletion (optional)
-            fetchData();
+            // Check if the request was successful
+            if (res.ok) {
+                alert("Product deleted successfully");
+
+                // Refresh product list after deletion (optional)
+                fetchData();
+            } else {
+                throw new Error("Failed to delete product");
+            }
         } catch (error) {
             console.log(error);
+            alert("There was an error deleting the product");
         }
     };
+
 
     // Logut button 
     const logoutButton = document.querySelector("#logout-button");
     if (logoutButton) {
         logoutButton.addEventListener("click", () => {
             // Clear user-specific data from localStorage
-            localStorage.removeItem("currentUserId");
-            localStorage.removeItem("currentUserEmail");
+            localStorage.removeItem("currentAdminId");
+            localStorage.removeItem("currentAdminEmail");
 
             alert("You have been logged out successfully.");
 
