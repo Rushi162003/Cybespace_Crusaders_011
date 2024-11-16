@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="Products-details.css">
+</head>
+<body>
+
+    <div class="product-container">
+        <!-- Product Details Left Section -->
+        <div class="product-info">
+            <h1 id="product-name" class="product-name"></h1>
+            <p id="product-brand" class="product-brand"></p>
+            <p id="product-category" class="product-category"></p>
+            <p id="product-price" class="product-price"></p>
+            <p id="stock-status" class="stock-status"></p>
+            <button class="add-to-cart">Add To Cart</button>
+        </div>
+        
+        <!-- Product Image Right Section -->
+        <div class="product-image">
+            <img id="product-image" alt="Product Image">
+        </div>
+    </div>
+
+    <div id="other-products" class="other-products">
+        <h2>Other Products in the Same Category</h2>
+        <div class="products-list"></div>
+    </div>
+
+    <script>
+        // Fetch product details from API
+        async function fetchProductDetails() {
+            const productName = localStorage.getItem("productName");
+
+            if (!productName) {
+                document.body.innerHTML = "<p>Product not found in localStorage.</p>";
+                return;
+            }
+
+            try {
+                // Fetch product data from the Firebase database
+                const response = await fetch('https://nykaa-69cc3-default-rtdb.firebaseio.com/product.json');
+                const data = await response.json();
+
+                // Find the product based on the name
+                let selectedProduct = null;
+                for (let key in data) {
+                    if (data[key].name === productName) {
+                        selectedProduct = data[key];
+                        break;
+                    }
+                }
+
+                if (!selectedProduct) {
+                    document.body.innerHTML = "<p>Product not found in the database.</p>";
+                    return;
+                }
+
+                // Display the selected product details
+                document.getElementById("product-image").src = selectedProduct.imageUrl;
+                document.getElementById("product-name").textContent = selectedProduct.name;
+                document.getElementById("product-brand").textContent = `Brand: ${selectedProduct.brand || "Unknown"}`;
+                document.getElementById("product-category").textContent = `Category: ${selectedProduct.category}`;
+                document.getElementById("product-price").textContent = `Price: ₹${selectedProduct.price.toFixed(2)}`;
+                document.getElementById("stock-status").textContent = `Stock Status: ${selectedProduct.stockStatus ? "In Stock" : "Out of Stock"}`;
+
+                // Display other products in the same category
+                displayOtherProductsInSameCategory(data, selectedProduct.category, productName);
+
+            } catch (error) {
+                console.error('Error fetching product data:', error);
+                document.body.innerHTML = "<p>Failed to load product details. Please try again later.</p>";
+            }
+        }
+
+        // Display other products from the same category
+        function displayOtherProductsInSameCategory(data, category, selectedProductName) {
+            const productsList = document.querySelector('.products-list');
+            productsList.innerHTML = '';  // Clear the existing products
+
+            // Loop through the products and filter by category
+            for (let key in data) {
+                const product = data[key];
+                if (product.name !== selectedProductName && product.category === category) {
+                    const productElement = document.createElement('div');
+                    productElement.classList.add('product-item');
+
+                    productElement.innerHTML = `
+                        <img src="${product.imageUrl}" alt="${product.name}" class="product-thumbnail">
+                        <h3>${product.name}</h3>
+                        <p>Price: ₹${product.price.toFixed(2)}</p>
+                        <p>Reviews: ${product.ratings ? product.ratings : "No reviews yet"}</p>
+                    `;
+
+                    productsList.appendChild(productElement);
+                }
+            }
+        }
+
+        // Retrieve the product name from localStorage and fetch its details
+        const productName = localStorage.getItem("productName");
+        if (productName) {
+            fetchProductDetails();
+        } else {
+            document.body.innerHTML = "<p>No product selected.</p>";
+        }
+    </script>
+
+</body>
+</html>
