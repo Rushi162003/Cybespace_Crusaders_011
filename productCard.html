@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
+    <title>Document</title>
     <link rel="stylesheet" href="ProductCard.css">
 </head>
 <style>
+    
 </style>
 <body>
+    <div id="cart">
+        <button id="cart-button">🛒 Cart (<span id="cart-count">0</span>)</button>
+        <div id="cart-content">
+            <h2 style="margin: 10px;">Your Cart</h2>
+            <div id="cart-items"></div>
+            <div id="cart-total">
+                <p>Total: ₹<span id="cart-total-price">0.00</span></p>
+            </div>
+            <button id="checkout-button">Checkout</button>
+        </div>
+    </div>
+    
     <div class="wrapper">
         <div id="search-container">
             <input type="search" id="search-input" placeholder="Search Product name here..">
@@ -34,6 +47,7 @@
         <input type="number" id="max-price" placeholder="Max Price" />
         <button id="filter-price">Apply Filter</button>
     </div>
+    
     
     <div id="container" class="container"></div>
 
@@ -79,6 +93,13 @@ function createCard(item) {
     image.alt = item.name;
     image.classList.add('item-image');
 
+    image.addEventListener("click", () => {
+        // Save product name to localStorage
+        localStorage.setItem("productName", item.name);
+        // Redirect to the product details page
+        window.location.href = "product-details.html";
+    });
+
     const title = document.createElement("h2");
     title.textContent = item.name;
     title.classList.add("item-title");
@@ -87,13 +108,23 @@ function createCard(item) {
     price.textContent = `MRP: ₹${item.price.toFixed(2)}`;
 
     const button = document.createElement("button");
+    button.classList.add("add-to-bag");
     button.textContent = "Add To Bag";
+    button.onclick = () => addTocartDetails(item.id);
+   
 
     const rating = document.createElement("div");
     rating.classList.add("rating");
     rating.innerHTML = renderStars(item.ratings) + `<span>${item.ratings}</span>`;
 
     card.append(image, title, price, rating, button);
+    /*card.addEventListener("click", () => {
+    // Save product name to localStorage
+    localStorage.setItem("productName", item.name);
+    // Redirect to the product details page
+    window.location.href = "product-details.html";
+});*/
+
     return card;
 }
 
@@ -157,8 +188,108 @@ function renderStars(rating) {
     return starHTML;
 }
 
-fetchData();
+//start cart //
+let cartData = JSON.parse(localStorage.getItem("cartData")) || [];
+const cartButton = document.getElementById("cart-button");
+const cartContent = document.getElementById("cart-content");
+const cartItems = document.getElementById("cart-items");
+const cartTotalPrice = document.getElementById("cart-total-price");
+const cartCount = document.getElementById("cart-count");
+const checkoutBtn = document.getElementById("checkout-button");
 
+// Toggle cart visibility
+cartButton.addEventListener("click", () => {
+    cartContent.classList.toggle("active");
+});
+
+// Add to cart functionality
+let cartArr = JSON.parse(localStorage.getItem("cartArr")) || [];
+function addToCart(item) {
+    const existingItem = cartArr.find(cartItem => cartItem.name === item.name);
+    if (existingItem) {
+        existingItem.quantity += 1;
+        alert(`${item.name} already into the cart.`);
+
+    } else {
+        cartArr.push({ ...item, quantity: 1 });
+        localStorage.setItem("cartArr", JSON.stringify(cartArr))
+        alert(`Added ${item.name} to cart.`);
+    }
+    updateCart();
+}
+
+// Update cart display
+function updateCart() {
+    let userEmail = localStorage.getItem("currentUserEmail")
+    let cartArr = JSON.parse(localStorage.getItem("cartArr")) || []
+    let product = cartArr.filter((res) => res.currentUserEmail == userEmail)
+
+    cartItems.innerHTML = "";
+    let total = 0;
+    let count = 0;
+
+    product.forEach(item => {
+        let cartItem = document.createElement("div");
+        cartItem.classList.add("cart-item");
+         cartItem += `
+        <div class="cart-item">
+            <div>
+                <img src="${item.imageUrl}" alt="${item.name}">
+            </div>
+            <div>
+                <p>${item.name}</p>
+                <p>₹${(item.price * item.quantity).toFixed(2)}</p>
+                <a href="" class="removeBtn">remove</a>
+            </div>
+        </div>
+        `
+        cartItems.innerHTML+=cartItem    
+        total += item.price * item.quantity;
+        count += item.quantity;
+    });
+
+    cartTotalPrice.textContent = total.toFixed(2);
+    cartCount.textContent = count;
+
+    localStorage.setItem("cartArr", JSON.stringify(cartArr));
+}
+
+// Add to the "Add to Bag" button functionality
+let currentUserEmail = localStorage.getItem("currentUserEmail")
+function addTocartDetails(id){  
+        console.log(id)
+        console.log(currentUserEmail)
+        const card = event.target.closest(".card");
+        const name = card.querySelector(".item-title").textContent;
+        const price = parseFloat(card.querySelector("p").textContent.replace("MRP: ₹", ""));
+        const imageUrl = card.querySelector("img").src;
+        if (currentUserEmail){
+            addToCart({ name, price, imageUrl,currentUserEmail });
+        }
+        else{
+            alert("Please login first")
+        }
+    }
+
+// On page load, display the cart data
+document.addEventListener("DOMContentLoaded", () => {
+    updateCart();
+});
+
+// Checkout button functionality
+checkoutBtn.addEventListener("click", () => {
+    const totalAmount = cartData.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    localStorage.setItem("cartTotal", totalAmount.toFixed(2));
+    window.location.href = "checkout.html";
+});
+
+
+
+//end cart//
+
+
+
+fetchData();
 
 
 </script>
