@@ -73,7 +73,7 @@
                     <label for="imageUrl">Image URL</label>
                     <input type="text" id="imageUrl" placeholder="Enter image URL">
                 </div>
-                <input type="submit" class="btn" value="Add Product">
+                <input type="submit" class="btn" id="formSubmit" value="Add Product">
             </div>
         </form>
     </div>
@@ -115,25 +115,27 @@
 
     fetchCategory();
 
-    let form = document.querySelector("#addProduct")
+    let form = document.querySelector("#formSubmit")
 
 
     form.addEventListener("click", getProduct)
 
+    const id = Math.floor(Math.random() * 10000) + 1
     function getProduct() {
         event.preventDefault()
-        let name = document.querySelector("#name")
-        let brand = document.querySelector("#brand")
-        let category = document.querySelector("#category")
-        let price = document.querySelector("#price")
-        let currency = document.querySelector("#currency")
-        let stockStauts = document.querySelector("#stockStauts")
-        let rating = document.querySelector("#rating")
-        let reviewsCount = document.querySelector("#reviewsCount")
-        let imageUrl = document.querySelector("#imageUrl")
+        let name = document.querySelector("#name").value
+        let brand = document.querySelector("#brand").value
+        let category = document.querySelector("#category").value
+        let price = document.querySelector("#price").value
+        let currency = document.querySelector("#currency").value
+        let stockStauts = document.querySelector("#stockStauts").value
+        let rating = document.querySelector("#rating").value
+        let reviewsCount = document.querySelector("#reviewsCount").value
+        let imageUrl = document.querySelector("#imageUrl").value
 
 
         let proObj = {
+            id: id,
             name: name,
             brand: brand,
             category: category,
@@ -151,7 +153,6 @@
         var headers = new Headers()
         headers.append("Content-Type", "application/json")
         // Ganerate Random id
-        const id = Math.floor(Math.random() * 10000) + 1
 
         let request = {
             method: "PUT",

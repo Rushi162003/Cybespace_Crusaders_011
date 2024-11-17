@@ -259,8 +259,8 @@ button:hover {
 /*start cart*/
 #cart {
     position: fixed;
-    top: 60px;
-    right: 40px;
+    top: 58px;
+    right: 0px;
     z-index: 1000;
     font-family: Arial, sans-serif;
 }
@@ -277,14 +277,14 @@ button:hover {
     /* display: inline-flex; */
     /* align-items: center;
     justify-content: center; */
-    padding: 0px 16px;
+    padding: 0px 10px;
     width: auto;
     background-color: #e6007e;
     color: white;
     font-weight: bold;
     border-radius: 8px;
-    font-size: 13px;
-
+    font-size: 11px;
+    width: 80px;
     height: 35px;
 }
 

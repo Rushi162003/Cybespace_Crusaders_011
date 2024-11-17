@@ -98,7 +98,7 @@
 
     async function fetchData() {
         try {
-            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id-1}.json`);
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id - 1}.json`);
             let data = await res.json();
 
             // Check if data exists and is an object
@@ -136,24 +136,23 @@
             categoryElement.innerHTML = "";
             let uniqueCategories = new Set();
 
-            // Check if resp is an array
-            if (Array.isArray(resp)) {
-                resp.forEach(element => {
-                    if (element.category && !uniqueCategories.has(element.category)) {
-                        uniqueCategories.add(element.category);
-                        let option = document.createElement("option");
-                        option.value = element.category;
-                        option.textContent = element.category;
-                        categoryElement.appendChild(option);
-                    }
-                });
-            } else {
-                console.error("Response is not an array:", resp);
-            }
+            // Convert the object response to an array
+            const productsArray = Object.values(resp);
+
+            productsArray.forEach(element => {
+                if (element.category && !uniqueCategories.has(element.category)) {
+                    uniqueCategories.add(element.category);
+                    let option = document.createElement("option");
+                    option.value = element.category;
+                    option.textContent = element.category;
+                    categoryElement.appendChild(option);
+                }
+            });
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     }
+
 
     categoryAdd()
     fetchData();
@@ -187,12 +186,12 @@
         }
         addProduct(proObj)
     }
-    
+
     async function addProduct(proObj) {
         var headers = new Headers()
         headers.append("Content-Type", "application/json")
         // Ganerate Random id
-        
+
         console.log(id)
         let request = {
             method: "PATCH",
@@ -202,7 +201,7 @@
         }
 
         try {
-            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id-1}.json`, request)
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id - 1}.json`, request)
             let data = await res.json()
 
             // name.value = data.name
@@ -216,7 +215,7 @@
             // imageUrl.value = data.imageUrl
             // console.log(data)
             alert("Product was updated")
-            // window.location.href="admin.html"
+            window.location.href = "admin.html"
         }
         catch (error) {
             alert("Product was not added")

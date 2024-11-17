@@ -26,34 +26,45 @@ if (loginCheck) {
 
         // set data to productArr And length
         productArr = data
-        proLength = productArr.length
-
-        document.querySelector("#product").innerHTML = `${proLength} Products Available`
-        display(data)
+        console.log(productArr)
+        display(productArr)
     }
     // call fetch data 
     fetchData()
-
-    // Display data from fetch using firebase
+ 
     function display(data) {
-        let child = ""
-        console.log(data)
+        let child = "";
+    
+        // Check if data is an object and convert it to an array
+        if (data && typeof data === 'object') {
+            data = Object.values(data);
+        }
+    
+        // Filter out any null or undefined elements from the data array
+        data = data.filter(element => element !== null);
+    
+        const proLength = data.length;
+    
+        document.querySelector("#product").innerHTML = `${proLength} Products Available`;
+    
+        // Now proceed with the safe iteration
         data.forEach(element => {
             child += `
-             <tr>
-                <td>${element.name}</td>
-                <td>${element.brand}</td>
-                <td>${element.category}</td>
-                <td>${element.price}</td>
-                <td>${element.ratings}</td>
-                <td><button class="edit-btn" onclick = "edit(${element.id})">Edit  </button></td>
-                <td><button class="delete-btn" onclick = "deleteProduct(${element.id})">Delete</button></td>
-            </tr>
-            `
-
+                <tr>
+                    <td>${element.name}</td>
+                    <td>${element.brand}</td>
+                    <td>${element.category}</td>
+                    <td>${element.price}</td>
+                    <td>${element.ratings}</td>
+                    <td><button class="edit-btn" onclick="edit(${element.id})">Edit</button></td>
+                    <td><button class="delete-btn" onclick="deleteProduct(${element.id})">Delete</button></td>
+                </tr>
+            `;
         });
-        document.querySelector("tbody").innerHTML = child
+    
+        document.querySelector("tbody").innerHTML = child;
     }
+    
 
     // Redirect to Edit html page
     function edit(id) {
@@ -65,7 +76,7 @@ if (loginCheck) {
     // Define the deleteProduct function and attach it to the window object
     window.deleteProduct = async function (id) {
         try {
-            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`, {
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id-1}.json`, {
                 method: "DELETE", // Use DELETE method
                 redirect: "follow" // Follow redirects if necessary
             });
@@ -75,7 +86,7 @@ if (loginCheck) {
                 alert("Product deleted successfully");
 
                 // Refresh product list after deletion (optional)
-                fetchData();
+                await fetchData();
             } else {
                 throw new Error("Failed to delete product");
             }

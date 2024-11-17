@@ -123,7 +123,7 @@
             title.classList.add("item-title");
 
             const price = document.createElement("p");
-            price.textContent = `MRP: ₹${item.price.toFixed(2)}`;
+            price.textContent = `MRP: ₹${Number(item.price).toFixed(2)}`;
 
             const button = document.createElement("button");
             button.classList.add("add-to-bag");
