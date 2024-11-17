@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="search.css">
+    <style>
+        /* Basic  */
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="search-container">
+            <input type="search" id="search-input" placeholder="Search Product name here..">
+            <button id="search">search</button>
+        </div>
+        <div id="buttons">
+            <button class="btn-all">All</button>
+            <button class="btn-makeup">Makeup</button>
+            <button class="btn-skincare">Skincare</button>
+            <button class="btn-Haircare">Haircare</button>
+            <button class="btn-Body-Care">Body Care</button>
+            <button class="btn-Fragrance">Fragrance</button>
+            <button class="btn-Cameras">Cameras</button>
+        </div>
+    </div>
+
+    <div id="price-filter">
+        <label for="min-price">Min Price: ₹</label>
+        <input type="number" id="min-price" placeholder="Min Price" />
+        <label for="max-price">Max Price: ₹</label>
+        <input type="number" id="max-price" placeholder="Max Price" />
+        <button id="filter-price">Apply Filter</button>
+    </div>
+    
+    <div id="container" class="container"></div>
+
+    <!-- Cart Icon -->
+    <div id="cart-icon" onclick="toggleCart()">🛒</div>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-container">
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div id="total-price">Total Price: ₹0</div>
+        <button onclick="toggleCart()">Close Cart</button>
+    </div>
+
+    <script>
+        let container = document.getElementById("container");
+        let cartContainer = document.getElementById("cart-items");
+        let totalPriceElement = document.getElementById("total-price");
+        let cart = [];
+        let searchInput = document.getElementById("search-input");
+
+        async function fetchData() {
+            try {
+                let res = await fetch(
+                    'https://nykaa-69cc3-default-rtdb.firebaseio.com/product.json'
+                );
+                let data = await res.json();
+                console.log(data);
+                setupFilters(data);
+                appendData(data); // Display all products initially
+
+                searchInput.addEventListener("input", () => searchProducts(data));
+                document.getElementById("filter-price").addEventListener("click", () => applyPriceFilter(data));
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function appendData(data) {
+            container.innerHTML = ""; // Clear previous content
+            data.forEach((item) => container.append(createCard(item)));
+        }
+
+        function createCard(item) {
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            const image = document.createElement("img");
+            image.src = item.imageUrl;
+            image.alt = item.name;
+            image.classList.add('item-image');
+
+            const title = document.createElement("h2");
+            title.textContent = item.name;
+            title.classList.add("item-title");
+
+            const price = document.createElement("p");
+            price.textContent = `MRP: ₹${item.price.toFixed(2)}`;
+
+            const button = document.createElement("button");
+            button.textContent = "Add To Bag";
+            button.addEventListener("click", () => addToCart(item));
+
+            const rating = document.createElement("div");
+            rating.classList.add("rating");
+            rating.innerHTML = renderStars(item.ratings) + `<span>${item.ratings}</span>`;
+
+            card.append(image, title, price, rating, button);
+            return card;
+        }
+
+        function renderStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+            const emptyStars = 5 - fullStars - halfStar;
+
+            let starHTML = "";
+
+            for (let i = 0; i < fullStars; i++) {
+                starHTML += `<span class="star full">★</span>`;
+            }
+
+            if (halfStar) {
+                starHTML += `<span class="star half">★</span>`;
+            }
+
+            for (let i = 0; i < emptyStars; i++) {
+                starHTML += `<span class="star empty">☆</span>`;
+            }
+
+            return starHTML;
+        }
+
+        function setupFilters(data) {
+            document.querySelector(".btn-all").addEventListener("click", () => appendData(data));
+            document.querySelector(".btn-makeup").addEventListener("click", () => filterCategory(data, "Makeup"));
+            document.querySelector(".btn-skincare").addEventListener("click", () => filterCategory(data, "Skincare"));
+            document.querySelector(".btn-Haircare").addEventListener("click", () => filterCategory(data, "Haircare"));
+            document.querySelector(".btn-Body-Care").addEventListener("click", () => filterCategory(data, "Body Care"));
+            document.querySelector(".btn-Fragrance").addEventListener("click", () => filterCategory(data, "Fragrance"));
+            document.querySelector(".btn-Cameras").addEventListener("click", () => filterCategory(data, "Cameras"));
+        }
+
+        function filterCategory(data, category) {
+            const filteredData = data.filter((item) => item.category === category);
+            appendData(filteredData);
+        }
+
+        function searchProducts(data) {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredData = data.filter((item) => item.name.toLowerCase().includes(searchTerm));
+            appendData(filteredData);
+        }
+
+        function applyPriceFilter(data) {
+            const minPrice = parseFloat(document.getElementById("min-price").value) || 0;
+            const maxPrice = parseFloat(document.getElementById("max-price").value) || Infinity;
+
+            const filteredData = data.filter((item) => item.price >= minPrice && item.price <= maxPrice);
+            appendData(filteredData);
+        }
+
+        function addToCart(item) {
+            const productInCart = cart.find(product => product.id === item.id);
+            if (productInCart) {
+                productInCart.quantity++;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            cartContainer.innerHTML = "";
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                const cartItem = document.createElement("div");
+                cartItem.classList.add("cart-item");
+                cartItem.innerHTML = `
+                    <img src="${item.imageUrl}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <span>${item.name}</span>
+                        <div class="quantity-controls">
+                            <button class="minus" onclick="changeQuantity(${item.id}, -1)">-</button>
+                            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+                            <button class="plus" onclick="changeQuantity(${item.id}, 1)">+</button>
+                        </div>
+                    </div>
+                    <span>₹${(item.price * item.quantity).toFixed(2)}</span>
+                `;
+                cartContainer.append(cartItem);
+                totalPrice += item.price * item.quantity;
+            });
+
+            totalPriceElement.textContent = `Total Price: ₹${totalPrice.toFixed(2)}`;
+        }
+
+        function changeQuantity(productId, delta) {
+            const product = cart.find(item => item.id === productId);
+            if (product) {
+                product.quantity = Math.max(1, product.quantity + delta);
+                updateCartDisplay();
+            }
+        }
+
+        function updateQuantity(productId, newQuantity) {
+            const product = cart.find(item => item.id === productId);
+            if (product) {
+                product.quantity = parseInt(newQuantity);
+                updateCartDisplay();
+            }
+        }
+
+        // Toggle cart visibility
+        function toggleCart() {
+            const cartContainer = document.getElementById("cart-container");
+            cartContainer.classList.toggle("show");
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>

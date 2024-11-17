@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="ProductCard.css">
+    <link rel="stylesheet" href="./navbar.css">
+    <link rel="stylesheet" href="./footer.css">
+</head>
+<style>
+
+</style>
+
+<body>
+    <nav class="navbar"></nav>
+    <div id="cart">
+        <button id="cart-button">🛒 Cart (<span id="cart-count">0</span>)</button>
+        <div id="cart-content">
+            <h2 style="margin: 10px;">Your Cart</h2>
+            <div id="cart-items"></div>
+            <div id="cart-total">
+                <p>Total: ₹<span id="cart-total-price">0.00</span></p>
+            </div>
+            <button id="checkout-button">Checkout</button>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <!-- <div id="search-container">
+            <input type="search" id="search-input" placeholder="Search Product name here..">
+            <button id="search">search</button>
+        </div> -->
+        <div id="buttons">
+            <button class="btn-all">All</button>
+            <button class="btn-makeup">Makeup</button>
+            <button class="btn-skincare">skincare</button>
+            <button class="btn-Haircare">Haircare</button>
+            <button class="btn-Body-Care">Body Care</button>
+            <button class="btn-Fragrance">Fragrance</button>
+            <button class="btn-Cameras">Cameras</button>
+        </div>
+        <div id="price-filter">
+            <label for="min-price">Min Price: ₹</label>
+            <input type="number" id="min-price" placeholder="Min Price" />
+            <label for="max-price">Max Price: ₹</label>
+            <input type="number" id="max-price" placeholder="Max Price" />
+            <button id="filter-price">Apply Filter</button>
+        </div>
+    </div>
+
+
+    <div id="container" style="margin-top: 50px;" class="container"></div>
+
+    <footer class="footer"></footer>
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.navbar').innerHTML = data;
+            })
+            .catch(error => console.error("Error fetching navbar:", error));
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.footer').innerHTML = data;
+            })
+            .catch(error => console.error("Error fetching footer:", error));
+
+
+
+
+        let container = document.getElementById("container");
+        let searchInput = document.getElementById("search-input");
+
+        async function fetchData() {
+            try {
+                let res = await fetch(
+                    'https://nykaa-69cc3-default-rtdb.firebaseio.com/product.json'
+                );
+                let data = await res.json();
+                console.log(data);
+                setupFilters(data); // Set up the filter functionality
+                appendData(data); // Display all products initially
+
+                // Add event listener for the search input
+                // searchInput.addEventListener("input", () => searchProducts(data));
+
+                // Add event listeners for price range filter
+                document.getElementById("filter-price").addEventListener("click", () => applyPriceFilter(data));
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Function to display the cards on the page
+        function appendData(data) {
+            container.innerHTML = ""; // Clear previous content
+            data.forEach((item) => container.append(createCard(item)));
+        }
+
+        // Function to create a product card
+        function createCard(item) {
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            const image = document.createElement("img");
+            image.src = item.imageUrl;
+            image.alt = item.name;
+            image.classList.add('item-image');
+
+            image.addEventListener("click", () => {
+                // Save product name to localStorage
+                localStorage.setItem("productName", item.name);
+                // Redirect to the product details page
+                window.location.href = "productDetails.html";
+            });
+
+            const title = document.createElement("h2");
+            title.textContent = item.name;
+            title.classList.add("item-title");
+
+            const price = document.createElement("p");
+            price.textContent = `MRP: ₹${Number(item.price).toFixed(2)}`;
+
+            const button = document.createElement("button");
+            button.classList.add("add-to-bag");
+            button.textContent = "Add To Bag";
+            button.onclick = () => addTocartDetails(item.id);
+
+
+            const rating = document.createElement("div");
+            rating.classList.add("rating");
+            rating.innerHTML = renderStars(item.ratings) + `<span>${item.ratings}</span>`;
+
+            card.append(image, title, price, rating, button);
+            /*card.addEventListener("click", () => {
+            // Save product name to localStorage
+            localStorage.setItem("productName", item.name);
+            // Redirect to the product details page
+            window.location.href = "product-details.html";
+        });*/
+
+            return card;
+        }
+
+        // Function to set up category filter buttons
+        function setupFilters(data) {
+            document.querySelector(".btn-all").addEventListener("click", () => appendData(data));
+            document.querySelector(".btn-makeup").addEventListener("click", () => filterCategory(data, "Makeup"));
+            document.querySelector(".btn-skincare").addEventListener("click", () => filterCategory(data, "Skincare"));
+            document.querySelector(".btn-Haircare").addEventListener("click", () => filterCategory(data, "Haircare"));
+            document.querySelector(".btn-Body-Care").addEventListener("click", () => filterCategory(data, "Body Care"));
+            document.querySelector(".btn-Fragrance").addEventListener("click", () => filterCategory(data, "Fragrance"));
+            document.querySelector(".btn-Cameras").addEventListener("click", () => filterCategory(data, "Cameras"));
+        }
+
+        // Function to filter products by category
+        function filterCategory(data, category) {
+            const filteredData = data.filter((item) => item.category === category);
+            appendData(filteredData);
+        }
+
+        // Function to filter products by search input
+        function searchProducts(data) {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredData = data.filter((item) => item.name.toLowerCase().includes(searchTerm));
+            appendData(filteredData);
+        }
+
+        // Function to apply price range filter
+        function applyPriceFilter(data) {
+            const minPrice = parseFloat(document.getElementById("min-price").value) || 0;
+            const maxPrice = parseFloat(document.getElementById("max-price").value) || Infinity;
+
+            // Filter the products based on the price range
+            const filteredData = data.filter((item) => item.price >= minPrice && item.price <= maxPrice);
+            appendData(filteredData); // Display the filtered products
+        }
+
+        // Rating function
+        function renderStars(rating) {
+            const fullStars = Math.floor(rating); // Number of full stars
+            const halfStar = rating % 1 >= 0.5 ? 1 : 0; // Check for half star
+            const emptyStars = 5 - fullStars - halfStar; // Remaining stars
+
+            let starHTML = "";
+
+            // Add full stars
+            for (let i = 0; i < fullStars; i++) {
+                starHTML += `<span class="star full">★</span>`;
+            }
+
+            // Add half star if applicable
+            if (halfStar) {
+                starHTML += `<span class="star half">★</span>`;
+            }
+
+            // Add empty stars
+            for (let i = 0; i < emptyStars; i++) {
+                starHTML += `<span class="star empty">☆</span>`;
+            }
+
+            return starHTML;
+        }
+
+        //start cart //
+        let cartData = JSON.parse(localStorage.getItem("cartData")) || [];
+        const cartButton = document.getElementById("cart-button");
+        const cartContent = document.getElementById("cart-content");
+        const cartItems = document.getElementById("cart-items");
+        const cartTotalPrice = document.getElementById("cart-total-price");
+        const cartCount = document.getElementById("cart-count");
+        const checkoutBtn = document.getElementById("checkout-button");
+
+        // Toggle cart visibility
+        cartButton.addEventListener("click", () => {
+            cartContent.classList.toggle("active");
+        });
+
+        // Add to cart functionality
+        let cartArr = JSON.parse(localStorage.getItem("cartArr")) || [];
+        function addToCart(item) {
+            const existingItem = cartArr.find(cartItem => cartItem.name === item.name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+                alert(`${item.name} already into the cart.`);
+
+            } else {
+                cartArr.push({ ...item, quantity: 1 });
+                localStorage.setItem("cartArr", JSON.stringify(cartArr))
+                alert(`Added ${item.name} to cart.`);
+            }
+            updateCart();
+        }
+
+        // Update cart display
+        function updateCart() {
+            let userEmail = localStorage.getItem("currentUserEmail")
+            let cartArr = JSON.parse(localStorage.getItem("cartArr")) || []
+            let product = cartArr.filter((res) => res.currentUserEmail == userEmail)
+
+            cartItems.innerHTML = "";
+            let total = 0;
+            let count = 0;
+
+            product.forEach(item => {
+                let cartItem = document.createElement("div");
+                cartItem.classList.add("cart-item");
+                cartItem += `
+        <div class="cart-item">
+            <div>
+                <img src="${item.imageUrl}" alt="${item.name}">
+            </div>
+            <div class="cart-desc">
+                <p>${item.name}</p>
+                <p>₹${(item.price * item.quantity).toFixed(2)}</p>
+                <a href="#" class="removeBtn" onclick="removeBtn('${item.name}')">remove</a>
+            </div>
+        </div>
+        `
+                cartItems.innerHTML += cartItem
+                total += item.price * item.quantity;
+                count += item.quantity;
+            });
+
+            cartTotalPrice.textContent = total.toFixed(2);
+            cartTotalPrice.value = total.toFixed(2);
+            cartCount.textContent = count;
+
+            localStorage.setItem("cartArr", JSON.stringify(cartArr));
+        }
+
+        // Add to the "Add to Bag" button functionality
+        let currentUserEmail = localStorage.getItem("currentUserEmail")
+        function addTocartDetails(id) {
+            console.log(id)
+            console.log(currentUserEmail)
+            const card = event.target.closest(".card");
+            const name = card.querySelector(".item-title").textContent;
+            const price = parseFloat(card.querySelector("p").textContent.replace("MRP: ₹", ""));
+            const imageUrl = card.querySelector("img").src;
+            if (currentUserEmail) {
+                addToCart({ name, price, imageUrl, currentUserEmail });
+            }
+            else {
+                alert("Please login first")
+            }
+        }
+
+        // On page load, display the cart data
+        document.addEventListener("DOMContentLoaded", () => {
+            updateCart();
+        });
+
+        // Checkout button functionality
+        checkoutBtn.addEventListener("click", () => {
+            let totalAmt = document.getElementById("cart-total-price").value
+            if (totalAmt>0){
+
+                localStorage.setItem("cartTotal", totalAmt)
+                console.log(localStorage.getItem("cartTotal"))
+                window.location.href = "address.html";
+            }
+            else{
+                alert("Please add atleast one item")
+            }
+        });
+
+
+        function removeBtn(itemName) {
+            console.log(itemName);
+
+            // Retrieve the cart array from localStorage and parse it
+            let cartArr = JSON.parse(localStorage.getItem("cartArr")) || [];
+
+            // Filter out the item whose name matches itemName
+            let updateCartArr = cartArr.filter((item) => item.name !== itemName);
+
+            // Save the updated array back to localStorage
+            localStorage.setItem("cartArr", JSON.stringify(updateCartArr));
+
+            // Call a function to update the cart display if it exists
+            updateCart();
+        }
+
+
+
+        //end cart//
+
+
+
+        fetchData();
+
+
+    </script>
+</body>
+
+</html>

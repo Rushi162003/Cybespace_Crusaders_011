@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./admin.css">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Nayka Admin</div>
+        <div class="toggle">&#9776;</div>
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="#users">Users</a></li>
+            <li><a href="./addProduct.html">Add Product</a></li>
+            <li><a href="#settings">Settings</a></li>
+            <li>
+                <p style="cursor: pointer;" id="logout-button">Logout</p>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Add Products</h1>
+        </div>
+        <form action="" id="addProduct">
+            <div class="first-col">
+                <div class="input-box">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter product name">
+                </div>
+                <div class="input-box">
+                    <label for="brand">Brand</label>
+                    <input type="text" id="brand" placeholder="Enter product brand">
+                </div>
+                <div class="input-box">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="">Select category</option>
+                        <!-- Add categories as needed -->
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" placeholder="Enter price">
+                </div>
+                <div class="input-box">
+                    <label for="currency">Currency</label>
+                    <input type="text" id="currency" placeholder="Enter currency">
+                </div>
+            </div>
+            <div class="sec-col">
+                <div class="input-box">
+                    <label for="stockStauts">Stock Status</label>
+                    <select id="stockStauts">
+                        <option value="true">In Stock</option>
+                        <option value="false">Out of Stock</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="rating">Rating</label>
+                    <input type="text" id="rating" placeholder="Enter rating">
+                </div>
+                <div class="input-box">
+                    <label for="reviewsCount">Reviews Count</label>
+                    <input type="text" id="reviewsCount" placeholder="Enter reviews count">
+                </div>
+                <div class="input-box">
+                    <label for="imageUrl">Image URL</label>
+                    <input type="text" id="imageUrl" placeholder="Enter image URL">
+                </div>
+                <input type="submit" class="btn" id="formSubmit" value="Add Product">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+
+<script>
+    async function fetchCategory() {
+        try {
+            let res = await fetch("https://nayka-4ffd7-default-rtdb.firebaseio.com/.json");
+            let resp = await res.json();
+            console.log(resp);
+
+            let categoryElement = document.querySelector("#category");
+
+            // Clear any existing options (optional)
+            categoryElement.innerHTML = "";
+            let uniqueCategories = new Set();
+
+            // Check if resp is an array
+            if (Array.isArray(resp)) {
+                resp.forEach(element => {
+                    if (element.category && !uniqueCategories.has(element.category)) {
+                        uniqueCategories.add(element.category);
+                        let option = document.createElement("option");
+                        option.value = element.category;
+                        option.textContent = element.category;
+                        categoryElement.appendChild(option);
+                    }
+                });
+            } else {
+                console.error("Response is not an array:", resp);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    fetchCategory();
+
+    let form = document.querySelector("#formSubmit")
+
+
+    form.addEventListener("click", getProduct)
+
+    const id = Math.floor(Math.random() * 10000) + 1
+    function getProduct() {
+        event.preventDefault()
+        let name = document.querySelector("#name").value
+        let brand = document.querySelector("#brand").value
+        let category = document.querySelector("#category").value
+        let price = document.querySelector("#price").value
+        let currency = document.querySelector("#currency").value
+        let stockStauts = document.querySelector("#stockStauts").value
+        let rating = document.querySelector("#rating").value
+        let reviewsCount = document.querySelector("#reviewsCount").value
+        let imageUrl = document.querySelector("#imageUrl").value
+
+
+        let proObj = {
+            id: id,
+            name: name,
+            brand: brand,
+            category: category,
+            price: price,
+            currency: currency,
+            stockStatus: stockStauts,
+            ratings: rating,
+            reviewsCount: reviewsCount,
+            imageUrl: imageUrl
+        }
+        addProduct(proObj)
+    }
+
+    async function addProduct(proObj) {
+        var headers = new Headers()
+        headers.append("Content-Type", "application/json")
+        // Ganerate Random id
+
+        let request = {
+            method: "PUT",
+            headers: headers,
+            body: JSON.stringify(proObj),
+            redirect: "follow"
+        }
+
+        try {
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`, request)
+            let data = await res.json()
+            name.innerHTML = ""
+            brand.value = ""
+            category.value = ""
+            price.value = ""
+            currency.value = ""
+            stockStauts.value = ""
+            rating.value = ""
+            reviewsCount.value = ""
+            imageUrl.value = ""
+            alert("Product was added ")
+            console.log(data)
+        }
+        catch (error) {
+            alert("Product was not added")
+            console.log(error)
+        }
+    }
+
+</script>
