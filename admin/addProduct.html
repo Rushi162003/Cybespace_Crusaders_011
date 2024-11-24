@@ -57,6 +57,7 @@
                 <div class="input-box">
                     <label for="stockStauts">Stock Status</label>
                     <select id="stockStauts">
+                        <option value="true">Select value</option>
                         <option value="true">In Stock</option>
                         <option value="false">Out of Stock</option>
                     </select>
@@ -84,19 +85,19 @@
 <script>
     async function fetchCategory() {
         try {
-            let res = await fetch("https://nayka-4ffd7-default-rtdb.firebaseio.com/.json");
+            let res = await fetch("https://nayka-4ffd7-default-rtdb.firebaseio.com/product.json");
             let resp = await res.json();
             console.log(resp);
 
             let categoryElement = document.querySelector("#category");
 
-            // Clear any existing options (optional)
-            categoryElement.innerHTML = "";
+            // Clear any existing options
+            categoryElement.innerHTML = "<option value=''>Select category</option>";
             let uniqueCategories = new Set();
 
-            // Check if resp is an array
-            if (Array.isArray(resp)) {
-                resp.forEach(element => {
+            // Check if resp is an object
+            if (resp && typeof resp === "object") {
+                Object.values(resp).forEach(element => {
                     if (element.category && !uniqueCategories.has(element.category)) {
                         uniqueCategories.add(element.category);
                         let option = document.createElement("option");
@@ -106,12 +107,13 @@
                     }
                 });
             } else {
-                console.error("Response is not an array:", resp);
+                console.error("Response is not an object:", resp);
             }
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     }
+
 
     fetchCategory();
 
@@ -121,6 +123,7 @@
     form.addEventListener("click", getProduct)
 
     const id = Math.floor(Math.random() * 10000) + 1
+
     function getProduct() {
         event.preventDefault()
         let name = document.querySelector("#name").value
@@ -162,7 +165,7 @@
         }
 
         try {
-            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/${id}.json`, request)
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/product/${id}.json`, request)
             let data = await res.json()
             name.innerHTML = ""
             brand.value = ""
