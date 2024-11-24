@@ -1810,22 +1810,6 @@
 
 </html>
 
-<script>
-    let userEmail = localStorage.getItem("currentUserEmail");
-    if (userEmail) {
-        let signBtn = document.querySelector("#signBtn");
-        if (signBtn) {
-            signBtn.innerHTML = `
-            <span id="sign_in_button" style="display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; background-color: #e6007e; color: white; font-weight: bold; border-radius: 8px; font-size: 14px;" onclick="logout()">Logout</span>
-        `;
-        }
-    }
-
-    console.log(localStorage.getItem("currentUserEmail"))
-    function logout() {
-        localStorage.removeItem("currentUserId");
-        localStorage.removeItem("currentUserEmail");
-        alert("You have been logged out successfully.");
-    }
+<script src="./Script/navbar.js">
 
 </script>

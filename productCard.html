@@ -74,22 +74,29 @@
 
         let container = document.getElementById("container");
         let searchInput = document.getElementById("search-input");
-
+        let productData;
         async function fetchData() {
             try {
                 let res = await fetch(
-                    'https://nykaa-69cc3-default-rtdb.firebaseio.com/product.json'
+                    'https://nayka-4ffd7-default-rtdb.firebaseio.com/product.json'
                 );
                 let data = await res.json();
                 console.log(data);
-                setupFilters(data); // Set up the filter functionality
-                appendData(data); // Display all products initially
+                productData = data
+                if (productData && typeof productData === 'object') {
+                    productData = Object.values(productData);
+                }
+
+                // Filter out any null or undefined elements from the productData array
+                productData = productData.filter(element => element !== null);
+                setupFilters(productData); // Set up the filter functionality
+                appendData(productData); // Display all products initially
 
                 // Add event listener for the search input
                 // searchInput.addEventListener("input", () => searchProducts(data));
 
                 // Add event listeners for price range filter
-                document.getElementById("filter-price").addEventListener("click", () => applyPriceFilter(data));
+                document.getElementById("filter-price").addEventListener("click", () => applyPriceFilter(productData));
             } catch (err) {
                 console.error(err);
             }
@@ -298,13 +305,13 @@
         // Checkout button functionality
         checkoutBtn.addEventListener("click", () => {
             let totalAmt = document.getElementById("cart-total-price").value
-            if (totalAmt>0){
+            if (totalAmt > 0) {
 
                 localStorage.setItem("cartTotal", totalAmt)
                 console.log(localStorage.getItem("cartTotal"))
                 window.location.href = "address.html";
             }
-            else{
+            else {
                 alert("Please add atleast one item")
             }
         });
