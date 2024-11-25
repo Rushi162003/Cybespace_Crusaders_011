@@ -76,7 +76,7 @@ if (loginCheck) {
     // Define the deleteProduct function and attach it to the window object
     window.deleteProduct = async function (id) {
         try {
-            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/product/${id-1}.json`, {
+            let res = await fetch(`https://nayka-4ffd7-default-rtdb.firebaseio.com/product/${id}.json`, {
                 method: "DELETE", // Use DELETE method
                 redirect: "follow" // Follow redirects if necessary
             });
